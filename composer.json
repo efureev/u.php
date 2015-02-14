@@ -1,0 +1,15 @@
+{
+    "name": "efureev/uphp",
+    "type": "library",
+    "version": "0.1.0",
+    "description": "u.php коллекция полезных автономных функций и сниппетов для php",
+    "keywords": ["php", "utility", "helpers"],
+    "homepage": "https://github.com/efureev/u.php",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": { "uPhp\\": "src/uPhp/" }
+    },
+    "require": {
+        "php": ">=5.3.3"
+    }
+}
