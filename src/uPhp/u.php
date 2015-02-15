@@ -17,6 +17,7 @@ final class u {
     private static $classMap = [];
     private static $innerClassMap = [
         'uPhp\Exceptions\UnknownMethodException' => '/Exceptions/UnknownMethodException.php',
+        'uPhp\Exceptions\InvalidParamException' => '/Exceptions/InvalidParamException.php',
     ];
 
     public static function __callStatic($name, $arguments) {
