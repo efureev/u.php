@@ -293,7 +293,7 @@ class uBase {
 	 *
 	 * @return array
 	 */
-	public static function getYearlist($from,$to,$step = 1) {
+	public static function getRangeList($from,$to,$step = 1) {
 		$array = [];
 		for ($i = $from; $i <= $to; $i += $step) {
 			$array [] = $i;
