@@ -364,4 +364,124 @@ class uString {
 
 		return rtrim($matches[0]).$append;
 	}
+
+	/**
+	 * Заменяет первое вхождение в строке на подстроку
+	 * @param     $search
+	 * @param     $replace
+	 * @param     $subject
+	 * @param int $cur
+	 *
+	 * @return mixed
+	 */
+	public static function strReplaceFirst($search, $replace, $subject, $cur = 0)
+	{
+		$pos = strpos($subject, $search, $cur);
+		if ($pos!==false){
+			return substr_replace($subject, $replace, (int)$pos, strlen($search));
+		}
+		return $subject;
+	}
+
+
+	/**
+	 * Заменяет все вхождения в строке на подстроку
+	 * @param $search
+	 * @param $replace
+	 * @param $subject
+	 *
+	 * @return mixed
+	 */
+	public static function strReplaceAll($search, $replace, $subject)
+	{
+		return str_replace($search, $replace, $subject);
+	}
+
+	/**
+	 * Конвертирование \n и \r\n и \r в <br>
+	 *
+	 * @param string $str String to transform
+	 * @return string New string
+	 */
+	public static function nl2br($str)
+	{
+		return str_replace(["\r\n", "\r", "\n"], '<br>', $str);
+	}
+
+	/**
+	 * @param $str
+	 *
+	 * @return mixed
+	 */
+	public static function nlRemoove($str)
+	{
+		return str_replace(["\r\n", "\r", "\n"], '', $str);
+	}
+
+	/**
+	 * Преобразует кавычки в елочки в строке
+	 * @param $str
+	 *
+	 * @return mixed
+	 */
+	public static function strKavi4ki ($str) {
+		$str=preg_replace('/""+/','"',$str); // удаляет множественные кавычки
+		$str = preg_replace('/"([A-Za-zА-Яа-я0-9_])/','«$1',$str);
+		//$str = preg_replace('#"(\S)#','&laquo;$1',$str);
+		$str = preg_replace('#"#','»',$str);
+		//$str = preg_replace('#(\S\s*)"#','$1&raquo;',$str);
+		return	$str;
+	}
+
+	/**
+	 * Преобразует HTML-кавычки в HTML-елочки в строке
+	 * если $htmlkav=true - то преобразуется в HTML сущности кавычек, иначе в обычные кавычки-елочки.
+	 * @param      $str
+	 * @param bool $htmlkav
+	 *
+	 * @return mixed
+	 */
+	public static function strKavi4kiHTML ($str,$htmlkav=true) {
+		if ($htmlkav)
+			$htmlkav = ['&laquo;','&raquo;'];
+		else
+			$htmlkav = ['«','»'];
+
+		$str=preg_replace('/&quot;&quot;+/','&quot;',$str); // удаляет множественные кавычки
+		$str = preg_replace('/&quot;([A-Za-zА-Яа-я0-9_])/',$htmlkav[0].'$1',$str);
+		$str = preg_replace('#&quot;#',$htmlkav[1],$str);
+		return	$str;
+	}
+
+	/**
+	 * Генерация пароля
+	 *
+	 * @param int $numberDigits количество символов в пароле
+	 *
+	 * @return string
+	 */
+	public static function generate_password($numberDigits)
+	{
+		$arr = ['a','b','c','d','e','f',
+			'g','h','i','j','k','l',
+			'm','n','o','p','r','s',
+			't','u','v','x','y','z',
+			'A','B','C','D','E','F',
+			'G','H','I','J','K','L',
+			'M','N','O','P','R','S',
+			'T','U','V','X','Y','Z',
+			'1','2','3','4','5','6',
+			'7','8','9','0','.',',',
+			'(',')','[',']','!','?',
+			'&','%','@','*','$',
+			'<','>','|','+','-',
+			'{','}','~'];
+		$pass = "";
+		for($i = 0; $i < $numberDigits; $i++)
+		{
+			$index = rand(0, count($arr) - 1);
+			$pass .= $arr[$index];
+		}
+		return $pass;
+	}
 }

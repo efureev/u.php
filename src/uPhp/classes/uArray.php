@@ -87,4 +87,13 @@ class uArray {
 		return array_filter($array);
 	}
 
+	/**
+	 * Удаляет из массива по значению, а не по ключу.
+	 * @return array
+	 */
+	public static function array_remove_value ()
+	{
+		$args = func_get_args();
+		return array_diff($args[0],array_slice($args,1));
+	}
 }
