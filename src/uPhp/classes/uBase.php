@@ -37,15 +37,15 @@ class uBase
         if ($preserveEncodedEntities) {
             // @codeCoverageIgnoreStart
             if (defined('HHVM_VERSION')) {
-                $translation_table = get_html_translation_table(HTML_ENTITIES, ENT_QUOTES);
+                $translationTable = get_html_translation_table(HTML_ENTITIES, ENT_QUOTES);
             } else {
-                $translation_table = get_html_translation_table(HTML_ENTITIES, ENT_QUOTES, self::mbInternalEncoding());
+                $translationTable = get_html_translation_table(HTML_ENTITIES, ENT_QUOTES, self::mbInternalEncoding());
             }
             // @codeCoverageIgnoreEnd
 
-            $translation_table[ chr(38) ] = '&';
+            $translationTable[ chr(38) ] = '&';
 
-            return preg_replace('/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,3};)/', '&amp;', strtr($string, $translation_table));
+            return preg_replace('/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,3};)/', '&amp;', strtr($string, $translationTable));
         }
 
         return htmlentities($string, ENT_QUOTES, self::mbInternalEncoding());
@@ -66,15 +66,15 @@ class uBase
         if ($preserveEncodedEntities) {
             // @codeCoverageIgnoreStart
             if (defined('HHVM_VERSION')) {
-                $translation_table = get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES);
+                $translationTable = get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES);
             } else {
-                $translation_table = get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES, self::mbInternalEncoding());
+                $translationTable = get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES, self::mbInternalEncoding());
             }
             // @codeCoverageIgnoreEnd
 
-            $translation_table[ chr(38) ] = '&';
+            $translationTable[ chr(38) ] = '&';
 
-            return preg_replace('/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,3};)/', '&amp;', strtr($string, $translation_table));
+            return preg_replace('/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,3};)/', '&amp;', strtr($string, $translationTable));
         }
 
         return htmlentities($string, ENT_QUOTES, self::mbInternalEncoding());
@@ -199,21 +199,21 @@ class uBase
                 $html .= ' <span id="' . $uuid . '-collapsable" style="' . $setStyle . '"><br />[<br />';
 
                 $indent = 4;
-                $longest_key = 0;
+                $longestKey = 0;
 
                 foreach ($var as $key => $value) {
                     if (is_string($key)) {
-                        $longest_key = max($longest_key, strlen($key) + 2);
+                        $longestKey = max($longestKey, strlen($key) + 2);
                     } else {
-                        $longest_key = max($longest_key, strlen($key));
+                        $longestKey = max($longestKey, strlen($key));
                     }
                 }
 
                 foreach ($var as $key => $value) {
                     if (is_numeric($key)) {
-                        $html .= str_repeat(' ', $indent) . str_pad($key, $longest_key, ' ');
+                        $html .= str_repeat(' ', $indent) . str_pad($key, $longestKey, ' ');
                     } else {
-                        $html .= str_repeat(' ', $indent) . str_pad('"' . self::htmlentities($key) . '"', $longest_key, ' ');
+                        $html .= str_repeat(' ', $indent) . str_pad('"' . self::htmlentities($key) . '"', $longestKey, ' ');
                     }
 
                     $html .= ' => ';
@@ -252,7 +252,7 @@ class uBase
             $varArray = (array)$var;
 
             $indent = 4;
-            $longest_key = 0;
+            $longestKey = 0;
 
             foreach ($varArray as $key => $value) {
                 if (substr($key, 0, 2) == "\0*") {
@@ -266,17 +266,17 @@ class uBase
                 }
 
                 if (is_string($key)) {
-                    $longest_key = max($longest_key, strlen($key) + 2);
+                    $longestKey = max($longestKey, strlen($key) + 2);
                 } else {
-                    $longest_key = max($longest_key, strlen($key));
+                    $longestKey = max($longestKey, strlen($key));
                 }
             }
 
             foreach ($varArray as $key => $value) {
                 if (is_numeric($key)) {
-                    $html .= str_repeat(' ', $indent) . str_pad($key, $longest_key, ' ');
+                    $html .= str_repeat(' ', $indent) . str_pad($key, $longestKey, ' ');
                 } else {
-                    $html .= str_repeat(' ', $indent) . str_pad('"' . self::htmlentities($key) . '"', $longest_key, ' ');
+                    $html .= str_repeat(' ', $indent) . str_pad('"' . self::htmlentities($key) . '"', $longestKey, ' ');
                 }
 
                 $html .= ' => ';

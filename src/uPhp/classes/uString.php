@@ -198,15 +198,15 @@ class uString
         $includeSymbols = false,
         $noDuplicateChars = false
     ) {
-        $nice_chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefhjkmnprstuvwxyz23456789';
-        $all_an = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+        $niceChars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefhjkmnprstuvwxyz23456789';
+        $allAn = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
         $symbols = '!@#$%^&*()~_-=+{}[]|:;<>,.?/"\'\\`';
         $string = '';
 
         if ($humanFriendly) {
-            $pool = $nice_chars;
+            $pool = $niceChars;
         } else {
-            $pool = $all_an;
+            $pool = $allAn;
 
             if ($includeSymbols) {
                 $pool .= $symbols;
@@ -269,7 +269,7 @@ class uString
     public static function linkify($text)
     {
         $text = preg_replace('/&apos;/', '&#39;', $text); // IE does not handle &apos; entity!
-        $section_html_pattern = '%# Rev:20100913_0900 github.com/jmrware/LinkifyURL
+        $sectionHtmlPattern = '%# Rev:20100913_0900 github.com/jmrware/LinkifyURL
             # Section text into HTML <A> tags  and everything else.
               (                             # $1: Everything not HTML <A> tag.
                 [^<]+(?:(?!<a\b)<[^<]*)*     # non A tag stuff starting with non-"<".
@@ -282,20 +282,20 @@ class uString
              )                              # End $2:
             %ix';
 
-        return preg_replace_callback($section_html_pattern, [__CLASS__, 'linkifyCallback'], $text);
+        return preg_replace_callback($sectionHtmlPattern, [__CLASS__, 'linkifyCallback'], $text);
     }
 
     /**
      * Callback for the preg_replace in the linkify() method.
      * Part of the LinkifyURL Project <https://github.com/jmrware/LinkifyURL>
      *
-     * @param  array $matches Matches from the preg_ function
+     * @param  string $text
      *
      * @return string
      */
     protected static function linkifyRegex($text)
     {
-        $url_pattern = '/# Rev:20100913_0900 github.com\/jmrware\/LinkifyURL
+        $urlPattern = '/# Rev:20100913_0900 github.com\/jmrware\/LinkifyURL
             # Match http & ftp URL that is not already linkified.
             # Alternative 1: URL delimited by (parentheses).
             (\() # $1 "(" start delimiter.
@@ -336,9 +336,9 @@ class uString
            ) # End $14. Other non-delimited URL.
             /imx';
 
-        $url_replace = '$1$4$7$10$13<a href="$2$5$8$11$14">$2$5$8$11$14</a>$3$6$9$12';
+        $urlReplace = '$1$4$7$10$13<a href="$2$5$8$11$14">$2$5$8$11$14</a>$3$6$9$12';
 
-        return preg_replace($url_pattern, $url_replace, $text);
+        return preg_replace($urlPattern, $urlReplace, $text);
     }
 
     /**
@@ -371,10 +371,10 @@ class uString
     public static function safeTruncate($string, $length, $append = '...')
     {
         $ret = substr($string, 0, $length);
-        $last_space = strrpos($ret, ' ');
+        $lastSpace = strrpos($ret, ' ');
 
-        if ($last_space !== false && $string != $ret) {
-            $ret = substr($ret, 0, $last_space);
+        if ($lastSpace !== false && $string != $ret) {
+            $ret = substr($ret, 0, $lastSpace);
         }
 
         if ($ret != $string) {
@@ -503,7 +503,7 @@ class uString
      *
      * @return string
      */
-    public static function generate_password($numberDigits)
+    public static function generatePassword($numberDigits)
     {
         $arr = ['a', 'b', 'c', 'd', 'e', 'f',
             'g', 'h', 'i', 'j', 'k', 'l',
