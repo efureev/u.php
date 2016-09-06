@@ -12,6 +12,9 @@ defined('UPHP_PATH') or define('UPHP_PATH', __DIR__);
  * @link   http://github.com/efureev/u.php/
  *
  * @method static bool isDateFormat(string $date) Проверяет, является ли значение форматом даты
+ * @method static bool isAssociative($array, $allStrings = true) Проверяет, является ли массив ассоциативным
+ * @method static bool isIndexed(array $array, $consecutive = false) Проверяет, является ли массив индексируемым
+ * @method static array arrayClean(array $array) Очищает массив от пустых значений
  */
 final class u
 {
@@ -45,6 +48,11 @@ final class u
         }
     }
 
+    /**
+     * @param $className
+     * @throws \uPhp\Exceptions\UnknownClassException
+     * @test: ok
+     */
     public static function autoload($className)
     {
         if (isset(static::$classMap[$className])) {
@@ -61,11 +69,19 @@ final class u
         }
     }
 
+    /**
+     * @return string
+     * @test: ok
+     */
     public static function version()
     {
         return '0.1.0';
     }
 
+    /**
+     * @return string
+     * @test: ok
+     */
     public function __toString()
     {
         return static::version();

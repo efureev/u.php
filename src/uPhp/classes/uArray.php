@@ -82,7 +82,7 @@ class uArray
      * @test: ok
      * @return array
      */
-    public static function array_clean(array $array)
+    public static function arrayClean(array $array)
     {
         return array_filter($array);
     }
@@ -92,7 +92,7 @@ class uArray
      *
      * @return array
      */
-    public static function array_remove_value()
+    public static function arrayRemoveValue()
     {
         $args = func_get_args();
         return array_diff($args[0], array_slice($args, 1));

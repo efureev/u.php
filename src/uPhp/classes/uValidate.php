@@ -16,6 +16,7 @@ class uValidate
      *
      * @param string $date
      * @return bool
+     * @test: ok
      */
     public static function isDateFormat($date)
     {

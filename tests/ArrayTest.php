@@ -5,15 +5,15 @@ use uPhp\u;
 
 class ArrayTest extends PHPUnit_Framework_TestCase {
 
-    public function test_array_clean() {
+    public function testArrayClean() {
         $input = ['a', 'b', '', null, '0', false, 0 ];
         $expect = ['a', 'b'];
-        $input = u::array_clean($input);
+        $input = u::arrayClean($input);
         $this->assertEquals($expect, $input);
         $this->assertNotEmpty($input);
     }
 
-    public function test_isIndexed() {
+    public function testIsIndexed() {
         $wKeys = ['a' => 1, 'b' => 'b2', 'v' => null ];
         $wKeys2 = [ 0 => 1, 1 => 'b2', 3 => null ];
         $wKeys3 = [ 0 => 1, 1 => 'b2', 3 => null, 6 => 12 ];
@@ -27,7 +27,7 @@ class ArrayTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(u::isIndexed($emptyKeys));
     }
 
-    public function test_isAssociative() {
+    public function testIsAssociative() {
         $wKeys = ['a' => 1, 'b' => 'b2', 'v' => null ];
         $wKeys2 = [ 0 => 1, 1 => 'b2', 3 => null ];
         $wKeys3 = [ 0 => 1, 1 => 'b2', 3 => null, 6 => 12 ];
