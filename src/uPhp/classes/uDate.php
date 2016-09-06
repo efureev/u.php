@@ -15,6 +15,7 @@ class uDate
      * Возвращает список времени
      *
      * @param int $minutes
+     *
      * @return array
      */
     public static function getTimeList($minutes = 30)
@@ -28,8 +29,9 @@ class uDate
             $m = floor($value % 60);
             if (strlen($h) === 1) $h = '0' . $h;
             if (strlen($m) === 1) $m = '0' . $m;
-            $res[$value] = $h . ':' . $m;
+            $res[ $value ] = $h . ':' . $m;
         }
+
         return $res;
     }
 }

@@ -20,6 +20,7 @@ class uArray
      * @param array   $array      the array being checked
      * @param boolean $allStrings whether the array keys must be all strings in order for
      *                            the array to be treated as associative.
+     *
      * @test: ok
      * @return boolean whether the array is associative
      */
@@ -33,12 +34,14 @@ class uArray
                 if (!is_string($key))
                     return false;
             }
+
             return true;
         } else {
             foreach ($array as $key => $value) {
                 if (is_string($key))
                     return true;
             }
+
             return false;
         }
     }
@@ -52,6 +55,7 @@ class uArray
      * @param array   $array       the array being checked
      * @param boolean $consecutive whether the array keys must be a consecutive sequence
      *                             in order for the array to be treated as indexed.
+     *
      * @test: ok
      * @return boolean whether the array is associative
      */
@@ -70,6 +74,7 @@ class uArray
                 if (!is_integer($key))
                     return false;
             }
+
             return true;
         }
     }
@@ -79,6 +84,7 @@ class uArray
      * Очищает массив от пустых значений, таких как: FALSE, 0, '0', '', null
      *
      * @param array $array
+     *
      * @test: ok
      * @return array
      */
@@ -95,6 +101,7 @@ class uArray
     public static function arrayRemoveValue()
     {
         $args = func_get_args();
+
         return array_diff($args[0], array_slice($args, 1));
     }
 }

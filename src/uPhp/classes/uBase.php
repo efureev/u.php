@@ -28,6 +28,7 @@ class uBase
      *
      * @param  string $string The text to be converted
      * @param bool    $preserve_encoded_entities
+     *
      * @example & => &amp;
      * @return string
      */
@@ -42,7 +43,8 @@ class uBase
             }
             // @codeCoverageIgnoreEnd
 
-            $translation_table[chr(38)] = '&';
+            $translation_table[ chr(38) ] = '&';
+
             return preg_replace('/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,3};)/', '&amp;', strtr($string, $translation_table));
         }
 
@@ -55,6 +57,7 @@ class uBase
      *
      * @param      $string
      * @param bool $preserve_encoded_entities
+     *
      * @example & => &amp;
      * @return string
      */
@@ -69,7 +72,7 @@ class uBase
             }
             // @codeCoverageIgnoreEnd
 
-            $translation_table[chr(38)] = '&';
+            $translation_table[ chr(38) ] = '&';
 
             return preg_replace('/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,3};)/', '&amp;', strtr($string, $translation_table));
         }
@@ -81,6 +84,7 @@ class uBase
      * Обертка, если на сервере нет mbstring расширения.
      *
      * @param  string $encoding
+     *
      * @return string
      */
     protected static function mbInternalEncoding($encoding = null)
@@ -98,7 +102,9 @@ class uBase
      * Отображает контекст переменной в претти виде
      *
      * @see recursiveVarDumpHelper()
+     *
      * @param  mixed $var The variable to dump
+     *
      * @return string
      */
     public static function dump($var, $return = false, $expandLevel = 1)
@@ -139,6 +145,7 @@ class uBase
      * Отображает контекст переменной в претти HTML формате
      *
      * @param  mixed $var The variable to dump
+     *
      * @return string
      */
     protected static function recursiveDumpHelper($var, $expLevel, $depth = 0, $done = [])
@@ -175,6 +182,7 @@ class uBase
                 foreach ($done as $prev) {
                     if ($prev === $var) {
                         $html .= '<span style="color:#588bff;">array</span>(' . count($var) . ') *RECURSION DETECTED*';
+
                         return $html;
                     }
                 }
@@ -214,7 +222,7 @@ class uBase
 
                     foreach ($value as $line => $val) {
                         if ($line != 0) {
-                            $value[$line] = str_repeat(' ', $indent * 2) . $val;
+                            $value[ $line ] = str_repeat(' ', $indent * 2) . $val;
                         }
                     }
 
@@ -228,6 +236,7 @@ class uBase
             foreach ($done as $prev) {
                 if ($prev === $var) {
                     $html .= '<span style="color:#588bff;">object</span>(' . get_class($var) . ') *RECURSION DETECTED*';
+
                     return $html;
                 }
             }
@@ -247,13 +256,13 @@ class uBase
 
             foreach ($varArray as $key => $value) {
                 if (substr($key, 0, 2) == "\0*") {
-                    unset($varArray[$key]);
+                    unset($varArray[ $key ]);
                     $key = 'protected:' . substr($key, 3);
-                    $varArray[$key] = $value;
+                    $varArray[ $key ] = $value;
                 } elseif (substr($key, 0, 1) == "\0") {
-                    unset($varArray[$key]);
+                    unset($varArray[ $key ]);
                     $key = 'private:' . substr($key, 1, strpos(substr($key, 1), "\0")) . ':' . substr($key, strpos(substr($key, 1), "\0") + 2);
-                    $varArray[$key] = $value;
+                    $varArray[ $key ] = $value;
                 }
 
                 if (is_string($key)) {
@@ -276,7 +285,7 @@ class uBase
 
                 foreach ($value as $line => $val) {
                     if ($line != 0) {
-                        $value[$line] = str_repeat(' ', $indent * 2) . $val;
+                        $value[ $line ] = str_repeat(' ', $indent * 2) . $val;
                     }
                 }
 
@@ -295,6 +304,7 @@ class uBase
      * @param int $from
      * @param int $to
      * @param int $step шаг
+     *
      * @return array
      */
     public static function getRangeList($from, $to, $step = 1)
@@ -303,6 +313,7 @@ class uBase
         for ($i = $from; $i <= $to; $i += $step) {
             $array [] = $i;
         }
+
         return $array;
     }
 }

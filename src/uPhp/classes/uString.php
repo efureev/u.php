@@ -17,6 +17,7 @@ class uString
      * Written by Tony Ferrara <http://blog.ircmaxwell.com>
      *
      * @param  string $string The string to be checked
+     *
      * @return boolean
      */
     public static function seemsUtf8($string)
@@ -24,6 +25,7 @@ class uString
         if (function_exists('mb_check_encoding')) {
             return mb_check_encoding($string, 'UTF-8');
         }
+
         // @codeCoverageIgnoreStart
         return self::seemsUtf8Regex($string);
         // @codeCoverageIgnoreEnd
@@ -33,6 +35,7 @@ class uString
      * A non-Mbstring UTF-8 checker.
      *
      * @param $string
+     *
      * @return bool
      */
     protected static function seemsUtf8Regex($string)
@@ -61,6 +64,7 @@ class uString
      *
      * @param  string $string
      * @param  string $startsWith
+     *
      * @return boolean
      */
     public static function startsWith($string, $startsWith)
@@ -73,6 +77,7 @@ class uString
      *
      * @param  string $string
      * @param  string $endsWith
+     *
      * @return boolean
      */
     public static function endsWith($string, $endsWith)
@@ -87,6 +92,7 @@ class uString
      * @param  string  $needle
      * @param  boolean $caseSensitive Регистронезависимый. TRUE = учитывать регистр,
      *                                False = не учитывать
+     *
      * @return boolean
      */
     public static function strContains($haystack, $needle, $caseSensitive = true)
@@ -100,6 +106,7 @@ class uString
      * Удаление множественных пробелов
      *
      * @param  string $string The string to strip
+     *
      * @return string
      */
     public static function stripSpace($string)
@@ -115,6 +122,7 @@ class uString
      * - Удаляет пробелы из начала и с конца
      *
      * @param  string $string the string to sanitize
+     *
      * @return string
      */
     public static function sanitizeString($string)
@@ -132,6 +140,7 @@ class uString
      *
      * @param  int $number The number to pad
      * @param  int $length The total length of the desired string
+     *
      * @return string
      */
     public static function zeroPad($number, $length)
@@ -147,6 +156,7 @@ class uString
      * @param int       $decimals
      * @param string    $decimalPoint
      * @param string    $thousandsSeparator
+     *
      * @return int|float
      */
     public static function calculatePercentage(
@@ -154,8 +164,8 @@ class uString
         $denominator,
         $decimals = 2,
         $decimalPoint = '.',
-        $thousandsSeparator = ',')
-    {
+        $thousandsSeparator = ','
+    ) {
         return number_format(($numerator / $denominator) * 100, $decimals, $decimalPoint, $thousandsSeparator);
     }
 
@@ -165,6 +175,7 @@ class uString
      * @throws  \LengthException  If $length is bigger than the available
      *                           character pool and $no_duplicate_chars is
      *                           enabled
+     *
      * @param   integer $length             The length of the string to
      *                                      generate
      * @param   boolean $humanFriendly      Whether or not to make the
@@ -178,14 +189,15 @@ class uString
      *                                      true
      * @param   boolean $noDuplicateChars   Whether or not to only use
      *                                      characters once in the string.
+     *
      * @return  string
      */
     public static function randomString(
         $length = 16,
         $humanFriendly = true,
         $includeSymbols = false,
-        $noDuplicateChars = false)
-    {
+        $noDuplicateChars = false
+    ) {
         $nice_chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefhjkmnprstuvwxyz23456789';
         $all_an = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
         $symbols = '!@#$%^&*()~_-=+{}[]|:;<>,.?/"\'\\`';
@@ -219,7 +231,7 @@ class uString
 
         // Generate our string
         for ($i = 0; $i < $length; $i++) {
-            $string .= $pool[$rand];
+            $string .= $pool[ $rand ];
 
             // Remove the character from the array to avoid duplicates
             array_splice($pool, $rand, 1);
@@ -239,6 +251,7 @@ class uString
      * Валидация email
      *
      * @param  string $possibleEmail An email address to validate
+     *
      * @return bool
      */
     public static function validateEmail($possibleEmail)
@@ -250,6 +263,7 @@ class uString
      * Оборачивает все ссылки в гиперссылки HTML.
      *
      * @param  string $text The string to parse
+     *
      * @return string
      */
     public static function linkify($text)
@@ -276,6 +290,7 @@ class uString
      * Part of the LinkifyURL Project <https://github.com/jmrware/LinkifyURL>
      *
      * @param  array $matches Matches from the preg_ function
+     *
      * @return string
      */
     protected static function linkifyRegex($text)
@@ -331,6 +346,7 @@ class uString
      * Part of the LinkifyURL Project <https://github.com/jmrware/LinkifyURL>
      *
      * @param  array $matches Matches from the preg_ function
+     *
      * @return string
      */
     protected static function linkifyCallback($matches)
@@ -349,6 +365,7 @@ class uString
      * @param   integer $length  The length to truncate the string to
      * @param   string  $append  Text to append to the string IF it gets
      *                           truncated, defaults to '...'
+     *
      * @return  string
      */
     public static function safeTruncate($string, $length, $append = '...')
@@ -373,6 +390,7 @@ class uString
      * @param        $string
      * @param        $limit
      * @param string $append
+     *
      * @return string
      */
     public static function limitWords($string, $limit = 100, $append = '...')
@@ -393,6 +411,7 @@ class uString
      * @param     $replace
      * @param     $subject
      * @param int $cur
+     *
      * @return string
      */
     public static function strReplaceFirst($search, $replace, $subject, $cur = 0)
@@ -401,6 +420,7 @@ class uString
         if ($pos !== false) {
             return substr_replace($subject, $replace, (int)$pos, strlen($search));
         }
+
         return $subject;
     }
 
@@ -411,6 +431,7 @@ class uString
      * @param string $search
      * @param string $replace
      * @param string $subject
+     *
      * @return string
      */
     public static function strReplaceAll($search, $replace, $subject)
@@ -422,6 +443,7 @@ class uString
      * Конвертирование \n и \r\n и \r в <br>
      *
      * @param string $str String to transform
+     *
      * @return string
      */
     public static function nl2br($str)
@@ -431,6 +453,7 @@ class uString
 
     /**
      * @param string $str
+     *
      * @return string
      */
     public static function nlRemoove($str)
@@ -442,6 +465,7 @@ class uString
      * Преобразует кавычки в елочки в строке
      *
      * @param string $str
+     *
      * @return string
      */
     public static function strKavi4ki($str)
@@ -449,6 +473,7 @@ class uString
         $str = preg_replace('/""+/', '"', $str); // удаляет множественные кавычки
         $str = preg_replace('/"([A-Za-zА-Яа-я0-9_])/', '«$1', $str);
         $str = preg_replace('#"#', '»', $str);
+
         return $str;
     }
 
@@ -457,6 +482,7 @@ class uString
      *
      * @param string $str
      * @param bool   $isHtml true - то преобразуется в HTML сущности кавычек, иначе в обычные кавычки-елочки
+     *
      * @return string
      */
     public static function strKavi4kiHTML($str, $isHtml = true)
@@ -466,6 +492,7 @@ class uString
         $str = preg_replace('/&quot;&quot;+/', '&quot;', $str); // удаляет множественные кавычки
         $str = preg_replace('/&quot;([A-Za-zА-Яа-я0-9_])/', $arr[0] . '$1', $str);
         $str = preg_replace('#&quot;#', $arr[1], $str);
+
         return $str;
     }
 
@@ -473,6 +500,7 @@ class uString
      * Генерация пароля
      *
      * @param int $numberDigits количество символов в пароле
+     *
      * @return string
      */
     public static function generate_password($numberDigits)
@@ -494,8 +522,9 @@ class uString
         $pass = "";
         for ($i = 0; $i < $numberDigits; $i++) {
             $index = rand(0, count($arr) - 1);
-            $pass .= $arr[$index];
+            $pass .= $arr[ $index ];
         }
+
         return $pass;
     }
 }

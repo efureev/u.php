@@ -15,14 +15,16 @@ class uColor
      * Convert a hexa decimal color code to its RGB equivalent
      *
      * @param string  $hexStr         (hexadecimal color value)
-     * @param boolean $returnAsString (if set true, returns the value separated by the separator character. Otherwise returns associative array)
+     * @param boolean $returnAsString (if set true, returns the value separated by the separator character. Otherwise
+     *                                returns associative array)
      * @param string  $seperator      (to separate RGB values. Applicable only if second parameter is true.)
+     *
      * @return array|string|null (depending on second parameter. Returns Null if invalid hex color value)
      */
     function hex2RGB($hexStr, $returnAsString = false, $seperator = ',')
     {
         $hexStr = preg_replace("/[^0-9A-Fa-f]/", '', $hexStr); // Gets a proper hex string
-        $rgbArray = array();
+        $rgbArray = [];
         if (strlen($hexStr) == 6) { //If a proper hex code, convert using bitwise operation. No overhead... faster
             $colorVal = hexdec($hexStr);
             $rgbArray['red'] = 0xFF & ($colorVal >> 0x10);
@@ -35,6 +37,7 @@ class uColor
         } else {
             return null; //Invalid hex color code
         }
+
         return $returnAsString ? implode($seperator, $rgbArray) : $rgbArray; // returns the rgb string or the associative array
     }
 

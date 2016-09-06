@@ -10,7 +10,6 @@ defined('UPHP_PATH') or define('UPHP_PATH', __DIR__);
  *
  * @author Eugene Fureev <efureev@yandex.ru>
  * @link   http://github.com/efureev/u.php/
- *
  * @method static bool isDateFormat(string $date) Проверяет, является ли значение форматом даты
  * @method static bool isAssociative($array, $allStrings = true) Проверяет, является ли массив ассоциативным
  * @method static bool isIndexed(array $array, $consecutive = false) Проверяет, является ли массив индексируемым
@@ -22,7 +21,7 @@ final class u
     private static $classMap = [];
     private static $innerClassMap = [
         'uPhp\Exceptions\UnknownMethodException' => '/Exceptions/UnknownMethodException.php',
-        'uPhp\Exceptions\InvalidParamException' => '/Exceptions/InvalidParamException.php',
+        'uPhp\Exceptions\InvalidParamException'  => '/Exceptions/InvalidParamException.php',
     ];
 
     public static function __callStatic($name, $arguments)
@@ -50,13 +49,14 @@ final class u
 
     /**
      * @param $className
+     *
      * @throws \uPhp\Exceptions\UnknownClassException
      * @test: ok
      */
     public static function autoload($className)
     {
-        if (isset(static::$classMap[$className])) {
-            $classFile = static::$classMap[$className];
+        if (isset(static::$classMap[ $className ])) {
+            $classFile = static::$classMap[ $className ];
             if ($classFile === false || !is_file($classFile))
                 return;
         } else

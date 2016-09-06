@@ -15,6 +15,7 @@ class uValidate
      * Проверяет, является ли значение форматом даты
      *
      * @param string $date
+     *
      * @return bool
      * @test: ok
      */
@@ -27,6 +28,7 @@ class uValidate
      * Проверяет, является ли значение датой
      *
      * @param $date
+     *
      * @return bool
      */
     public static function isDate($date)
@@ -37,6 +39,7 @@ class uValidate
         if (!preg_match('/^([0-9]{4})-((?:0?[0-9])|(?:1[0-2]))-((?:0?[0-9])|(?:[1-2][0-9])|(?:3[01]))( [0-9]{2}:[0-9]{2}:[0-9]{2})?$/', $date, $matches)) {
             return false;
         }
+
         return checkdate((int)$matches[2], (int)$matches[3], (int)$matches[1]);
     }
 
@@ -44,6 +47,7 @@ class uValidate
      * Валидация 24-часового формата времени
      *
      * @param $time
+     *
      * @return bool
      */
     public static function isTime($time)
@@ -54,6 +58,7 @@ class uValidate
         if (preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/', $time)) {
             return true;
         }
+
         return false;
     }
 
@@ -61,6 +66,7 @@ class uValidate
      * Валидация значения, как булев тип
      *
      * @param $bool
+     *
      * @return bool
      */
     public static function isBool($bool)
@@ -70,6 +76,7 @@ class uValidate
 
     /**
      * @param $value
+     *
      * @return bool
      */
     public static function isInt($value)
@@ -81,6 +88,7 @@ class uValidate
      * Валидация типа Integer без отрицательных значений
      *
      * @param $value
+     *
      * @return bool
      */
     public static function isUnsignedInt($value)
@@ -92,6 +100,7 @@ class uValidate
      * Валидация типа Integer без отрицательных значений и нуля
      *
      * @param $value
+     *
      * @return bool
      */
     public static function isNoZeroInt($value)
@@ -101,6 +110,7 @@ class uValidate
 
     /**
      * @param $float
+     *
      * @return bool
      */
     public static function isFloat($float)
@@ -110,6 +120,7 @@ class uValidate
 
     /**
      * @param $float
+     *
      * @return bool
      */
     public static function isUnsignedFloat($float)
@@ -119,6 +130,7 @@ class uValidate
 
     /**
      * @param $gmt
+     *
      * @return int
      */
     public static function isGMT($gmt)
@@ -128,6 +140,7 @@ class uValidate
 
     /**
      * @param $html
+     *
      * @return bool
      */
     public static function isCleanHtml($html)
@@ -143,11 +156,13 @@ class uValidate
         $events .= '|onoffline|ononline|onpaste|onpropertychange|onreadystatechange|onresizeend|onmoveend';
         $events .= '|onresizestart|onrowenter|onrowexit|onrowsdelete|onrowsinserted|onscroll|onsearch|onselectionchange';
         $events .= '|onselectstart|onstart|onstop';
+
         return (!preg_match('/<[ \t\n]*script/ims', $html) && !preg_match('/(' . $events . ')[ \t\n]*=/ims', $html) && !preg_match('/.*script\:/ims', $html) && !preg_match('/<[ \t\n]*i?frame/ims', $html));
     }
 
     /**
      * @param $value
+     *
      * @return bool
      */
     public static function isPercentage($value)
@@ -157,6 +172,7 @@ class uValidate
 
     /**
      * @param $color
+     *
      * @return int
      */
     public static function isColor($color)
@@ -166,6 +182,7 @@ class uValidate
 
     /**
      * @param $url
+     *
      * @return int
      */
     public static function isUrl($url)
@@ -175,6 +192,7 @@ class uValidate
 
     /**
      * @param $url
+     *
      * @return bool|int
      */
     public static function isAbsoluteUrl($url)
@@ -182,11 +200,13 @@ class uValidate
         if (!empty($url)) {
             return preg_match('/^https?:\/\/[,:#%&_=\(\)\.\? \+\-@\/a-zA-Z0-9]+$/', $url);
         }
+
         return true;
     }
 
     /**
      * @param $data
+     *
      * @return bool
      */
     public static function isString($data)
@@ -196,6 +216,7 @@ class uValidate
 
     /**
      * @param $data
+     *
      * @return bool
      */
     public static function isSerializedArray($data)
@@ -205,6 +226,7 @@ class uValidate
 
     /**
      * @param $data
+     *
      * @return bool
      */
     public static function isCoordinate($data)

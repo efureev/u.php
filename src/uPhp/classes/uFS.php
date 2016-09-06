@@ -14,15 +14,17 @@ class uFS
      * Возвращает пути всех файлов и папок, находящихся в директории
      *
      * @param string $dir
+     *
      * @return array
      */
     public static function dirContent($dir)
     {
-        $contents = array();
+        $contents = [];
         foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS)) as $pathname => $fi) {
             $contents[] = $pathname;
         }
         natsort($contents);
+
         return $contents;
     }
 
@@ -30,6 +32,7 @@ class uFS
      * Возвращает размер директории в байтах
      *
      * @param string $dir
+     *
      * @return integer
      */
     public static function dirSize($dir)
@@ -40,6 +43,7 @@ class uFS
                 $size += $key->getSize();
             }
         }
+
         return $size;
     }
 
@@ -47,6 +51,7 @@ class uFS
      * Возвращает расширение файла
      *
      * @param  string $filename
+     *
      * @return string
      */
     public static function getFileExt($filename)
@@ -59,6 +64,7 @@ class uFS
      *
      * @param  string $dir              директория для удаления
      * @param  bool   $traverseSymlinks Удалять содержимое симЛинков рекурсивно
+     *
      * @return bool
      * @throws \RuntimeException
      */
@@ -115,6 +121,7 @@ class uFS
      * @param string  $path      path of the directory to be created.
      * @param integer $mode      the permission to be set for the created directory.
      * @param boolean $recursive whether to create parent directories if they do not exist.
+     *
      * @return boolean whether the directory is created successfully
      */
     public static function dirCreate($path, $mode = 0775, $recursive = true)
@@ -138,6 +145,7 @@ class uFS
      *
      * @param   integer $bytes    The number in bytes to format
      * @param   integer $decimals The number of decimal points to include
+     *
      * @return  string
      */
     public static function sizeFormat($bytes, $decimals = 0)
@@ -168,8 +176,10 @@ class uFS
      * - Удаляет мульти-слеш (e.g. "/a///b/c" becomes "/a/b/c")
      * - Удаляет ".." и "." (e.g. "/a/./b/../c" becomes "/a/c")
      *
-     * @param string $path the file/directory path to be normalized
-     * @param string $slash   the directory separator to be used in the normalized result. Defaults to `DIRECTORY_SEPARATOR`.
+     * @param string $path  the file/directory path to be normalized
+     * @param string $slash the directory separator to be used in the normalized result. Defaults to
+     *                      `DIRECTORY_SEPARATOR`.
+     *
      * @return string the normalized file/directory path
      */
     public static function normalizePath($path, $slash = DIRECTORY_SEPARATOR)
@@ -190,6 +200,7 @@ class uFS
             }
         }
         $path = implode($slash, $parts);
+
         return $path === '' ? '.' : $path;
     }
 

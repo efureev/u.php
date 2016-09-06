@@ -3,9 +3,11 @@
 use uPhp\u;
 
 
-class ValidateTest extends PHPUnit_Framework_TestCase {
+class ValidateTest extends PHPUnit_Framework_TestCase
+{
 
-    public function test_isDateFormat() {
+    public function test_isDateFormat()
+    {
         $this->assertTrue(u::isDateFormat('2016-12-20'));
         $this->assertTrue(u::isDateFormat('2016-12-20 12:10:01'));
 
