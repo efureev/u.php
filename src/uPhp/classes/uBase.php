@@ -27,14 +27,14 @@ class uBase
      * Конвертирует сущности в символы пока они присутствуют в строке.
      *
      * @param  string $string The text to be converted
-     * @param bool    $preserve_encoded_entities
+     * @param bool    $preserveEncodedEntities
      *
      * @example & => &amp;
      * @return string
      */
-    public static function htmlentities($string, $preserve_encoded_entities = false)
+    public static function htmlentities($string, $preserveEncodedEntities = false)
     {
-        if ($preserve_encoded_entities) {
+        if ($preserveEncodedEntities) {
             // @codeCoverageIgnoreStart
             if (defined('HHVM_VERSION')) {
                 $translation_table = get_html_translation_table(HTML_ENTITIES, ENT_QUOTES);
@@ -56,14 +56,14 @@ class uBase
      * Конвертирует >, <, ', ", & в html сущности, но не трогает уже закодированые.
      *
      * @param      $string
-     * @param bool $preserve_encoded_entities
+     * @param bool $preserveEncodedEntities
      *
      * @example & => &amp;
      * @return string
      */
-    public static function htmlspecialchars($string, $preserve_encoded_entities = false)
+    public static function htmlspecialchars($string, $preserveEncodedEntities = false)
     {
-        if ($preserve_encoded_entities) {
+        if ($preserveEncodedEntities) {
             // @codeCoverageIgnoreStart
             if (defined('HHVM_VERSION')) {
                 $translation_table = get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES);

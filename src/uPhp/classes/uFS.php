@@ -20,7 +20,12 @@ class uFS
     public static function dirContent($dir)
     {
         $contents = [];
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS)) as $pathname => $fi) {
+        foreach (new \RecursiveIteratorIterator(
+                     new \RecursiveDirectoryIterator(
+                         $dir,
+                         \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS
+                     )
+                 ) as $pathname => $fi) {
             $contents[] = $pathname;
         }
         natsort($contents);
@@ -38,7 +43,12 @@ class uFS
     public static function dirSize($dir)
     {
         $size = 0;
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS)) as $file => $key) {
+        foreach (new \RecursiveIteratorIterator(
+                     new \RecursiveDirectoryIterator(
+                         $dir,
+                         \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS
+                     )
+                 ) as $key) {
             if ($key->isFile()) {
                 $size += $key->getSize();
             }

@@ -26,20 +26,23 @@ class uArray
      */
     public static function isAssociative($array, $allStrings = true)
     {
-        if (!is_array($array) || empty($array))
+        if (!is_array($array) || empty($array)) {
             return false;
+        }
 
         if ($allStrings) {
             foreach ($array as $key => $value) {
-                if (!is_string($key))
+                if (!is_string($key)) {
                     return false;
+                }
             }
 
             return true;
         } else {
-            foreach ($array as $key => $value) {
-                if (is_string($key))
+            foreach (array_keys($array) as $key) {
+                if (is_string($key)) {
                     return true;
+                }
             }
 
             return false;
@@ -61,18 +64,21 @@ class uArray
      */
     public static function isIndexed(array $array, $consecutive = false)
     {
-        if (!is_array($array))
+        if (!is_array($array)) {
             return false;
+        }
 
-        if (empty($array))
+        if (empty($array)) {
             return true;
+        }
 
         if ($consecutive) {
             return array_keys($array) === range(0, count($array) - 1);
         } else {
-            foreach ($array as $key => $value) {
-                if (!is_integer($key))
+            foreach (array_keys($array) as $key) {
+                if (!is_integer($key)) {
                     return false;
+                }
             }
 
             return true;
