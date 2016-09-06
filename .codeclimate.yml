@@ -1,0 +1,28 @@
+JavaScript: false
+Ruby: false
+Python: false
+PHP: true
+
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+  phpcodesniffer:
+    enabled: true
+  phpmd:
+    enabled: true
+    checks:
+      CleanCode/ElseExpression:
+        enabled: false
+      Controversial/Superglobals:
+        enabled: false
+ratings:
+  paths:
+  - "**.php"
+
+exclude_paths:
+- build/**/*
+- tests/*
+- vendor/**/*
