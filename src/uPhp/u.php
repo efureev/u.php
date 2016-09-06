@@ -5,14 +5,16 @@ namespace uPhp;
 defined('UPHP_PATH') or define('UPHP_PATH', __DIR__);
 
 
-
 /**
  * u.php
  *
  * @author Eugene Fureev <efureev@yandex.ru>
  * @link   http://github.com/efureev/u.php/
+ *
+ * @method static bool isDateFormat(string $date) Проверяет, является ли значение форматом даты
  */
-final class u {
+final class u
+{
 
     private static $classMap = [];
     private static $innerClassMap = [
@@ -20,11 +22,12 @@ final class u {
         'uPhp\Exceptions\InvalidParamException' => '/Exceptions/InvalidParamException.php',
     ];
 
-    public static function __callStatic($name, $arguments) {
+    public static function __callStatic($name, $arguments)
+    {
         static::autoloadInnerClass();
         static::$classMap = include(UPHP_PATH . '/classes.php');
 
-        foreach (static::$classMap as $classNamespace => $className) {
+        foreach (array_keys(static::$classMap) as $classNamespace) {
             if (method_exists($classNamespace, $name)) {
                 return call_user_func_array([$classNamespace, $name], $arguments);
             }
@@ -33,11 +36,12 @@ final class u {
         throw new \uPhp\Exceptions\UnknownMethodException('Calling unknown method: ' . get_class() . "::$name()");
     }
 
-    private static function autoloadInnerClass() {
+    private static function autoloadInnerClass()
+    {
         foreach (static::$innerClassMap as $nsClass => $classFile) {
-            if ($classFile === false || !is_file(UPHP_PATH.$classFile))
-                throw new Exception ("Inner class autoload error for class: ". $nsClass);
-            include_once(UPHP_PATH.$classFile);
+            if ($classFile === false || !is_file(UPHP_PATH . $classFile))
+                throw new \Exception ("Inner class autoload error for class: " . $nsClass);
+            include_once(UPHP_PATH . $classFile);
         }
     }
 
@@ -57,11 +61,13 @@ final class u {
         }
     }
 
-    public static function version() {
+    public static function version()
+    {
         return '0.1.0';
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return static::version();
     }
 

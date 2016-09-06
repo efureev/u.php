@@ -1,44 +1,44 @@
 <?php
 
 namespace uPhp\classes;
-use uPhp\u;
 /**
  * u.array
  * Класс для работы со строками
  *
  * @author Eugene Fureev <efureev@yandex.ru>
  */
-class uString {
+class uString
+{
 
-	/**
-	 * Проверяет, что строка в utf8 кодировке.
-	 *
-	 * NOTE: This function checks for 5-Byte sequences, UTF8
-	 *       has Bytes Sequences with a maximum length of 4.
-	 *
-	 * Written by Tony Ferrara <http://blog.ircmaxwell.com>
-	 *
-	 * @param  string $string The string to be checked
-	 * @return boolean
-	 */
-	public static function seems_utf8($string) {
-		if (function_exists('mb_check_encoding')) {
-			return mb_check_encoding($string, 'UTF-8');
-		}
-		// @codeCoverageIgnoreStart
-		return self::seemsUtf8Regex($string);
-		// @codeCoverageIgnoreEnd
-	}
+    /**
+     * Проверяет, что строка в utf8 кодировке.
+     * NOTE: This function checks for 5-Byte sequences, UTF8
+     *       has Bytes Sequences with a maximum length of 4.
+     * Written by Tony Ferrara <http://blog.ircmaxwell.com>
+     *
+     * @param  string $string The string to be checked
+     * @return boolean
+     */
+    public static function seemsUtf8($string)
+    {
+        if (function_exists('mb_check_encoding')) {
+            return mb_check_encoding($string, 'UTF-8');
+        }
+        // @codeCoverageIgnoreStart
+        return self::seemsUtf8Regex($string);
+        // @codeCoverageIgnoreEnd
+    }
 
-	/**
-	 * A non-Mbstring UTF-8 checker.
-	 *
-	 * @param $string
-	 * @return bool
-	 */
-	protected static function seemsUtf8Regex($string) {
-		// Obtained from http://stackoverflow.com/a/11709412/430062 with permission.
-		$regex = '/(
+    /**
+     * A non-Mbstring UTF-8 checker.
+     *
+     * @param $string
+     * @return bool
+     */
+    protected static function seemsUtf8Regex($string)
+    {
+        // Obtained from http://stackoverflow.com/a/11709412/430062 with permission.
+        $regex = '/(
     [\xC0-\xC1] # Invalid UTF-8 Bytes
     | [\xF5-\xFF] # Invalid UTF-8 Bytes
     | \xE0[\x80-\x9F] # Overlong encoding of prior code point
@@ -53,190 +53,199 @@ class uString {
     | (?<=[\xF0-\xF4][\x80-\xBF])[\x80-\xBF](?![\x80-\xBF]) # Short 4 byte sequence (2)
 )/x';
 
-		return ! preg_match($regex, $string);
-	}
+        return !preg_match($regex, $string);
+    }
 
-	/**
-	 * Начинается ли строка с подстроки
-	 *
-	 * @param  string $string
-	 * @param  string $starts_with
-	 * @return boolean
-	 */
-	public static function starts_with($string, $starts_with) {
-		return strpos($string, $starts_with) === 0;
-	}
+    /**
+     * Начинается ли строка с подстроки
+     *
+     * @param  string $string
+     * @param  string $starts_with
+     * @return boolean
+     */
+    public static function startsWith($string, $starts_with)
+    {
+        return strpos($string, $starts_with) === 0;
+    }
 
-	/**
-	 * Заканчивается ли строка подстрокой
-	 *
-	 * @param  string $string
-	 * @param  string $ends_with
-	 * @return boolean
-	 */
-	public static function ends_with($string, $ends_with) {
-		return substr($string, -strlen($ends_with)) === $ends_with;
-	}
+    /**
+     * Заканчивается ли строка подстрокой
+     *
+     * @param  string $string
+     * @param  string $ends_with
+     * @return boolean
+     */
+    public static function endsWith($string, $ends_with)
+    {
+        return substr($string, -strlen($ends_with)) === $ends_with;
+    }
 
-	/**
-	 * Строка содержит подстроку
-	 *
-	 * @param  string $haystack
-	 * @param  string $needle
-	 * @param  boolean $caseSensitive Регистронезависимый. TRUE = учитывать регистр, False = не учитывать
-	 * @return boolean
-	 */
-	public static function strContains($haystack, $needle, $caseSensitive = true){
-		return $caseSensitive
-			? strpos($haystack, $needle) !== false
-			: stripos($haystack, $needle) !== false;
-	}
+    /**
+     * Строка содержит подстроку
+     *
+     * @param  string  $haystack
+     * @param  string  $needle
+     * @param  boolean $caseSensitive Регистронезависимый. TRUE = учитывать регистр, False = не учитывать
+     * @return boolean
+     */
+    public static function strContains($haystack, $needle, $caseSensitive = true)
+    {
+        return $caseSensitive
+            ? strpos($haystack, $needle) !== false
+            : stripos($haystack, $needle) !== false;
+    }
 
-	/**
-	 * Удаление множественных пробелов
-	 *
-	 * @param  string $string The string to strip
-	 * @return string
-	 */
-	public static function strip_space($string) {
-		return preg_replace('/\s+/', ' ', $string);
-	}
+    /**
+     * Удаление множественных пробелов
+     *
+     * @param  string $string The string to strip
+     * @return string
+     */
+    public static function stripSpace($string)
+    {
+        return preg_replace('/\s+/', ' ', $string);
+    }
 
-	/**
-	 * Очищает строку по следующим операциям :
-	 * - Нижний регистр
-	 * - Удаляет все, исключая латиницу и цифры
-	 * - Удаляет множественные пробелы
-	 * - Удаляет пробелы из начала и с конца
-	 *
-	 * @param  string $string the string to sanitize
-	 * @return string
-	 */
-	public static function sanitize_string($string) {
-		$string = strtolower($string);
-		$string = preg_replace('/[^a-zA-Z 0-9]+/', '', $string);
-		$string = self::strip_space($string);
-		$string = trim($string);
+    /**
+     * Очищает строку по следующим операциям :
+     * - Нижний регистр
+     * - Удаляет все, исключая латиницу и цифры
+     * - Удаляет множественные пробелы
+     * - Удаляет пробелы из начала и с конца
+     *
+     * @param  string $string the string to sanitize
+     * @return string
+     */
+    public static function sanitizeString($string)
+    {
+        $string = strtolower($string);
+        $string = preg_replace('/[^a-zA-Z 0-9]+/', '', $string);
+        $string = self::strip_space($string);
+        $string = trim($string);
 
-		return $string;
-	}
+        return $string;
+    }
 
-	/**
-	 * Добавляет ведущие нули до определенной длины
-	 *
-	 * @param  int  $number The number to pad
-	 * @param  int  $length The total length of the desired string
-	 * @return string
-	 */
-	public static function zero_pad($number, $length){
-		return str_pad($number, $length, '0', STR_PAD_LEFT);
-	}
+    /**
+     * Добавляет ведущие нули до определенной длины
+     *
+     * @param  int $number The number to pad
+     * @param  int $length The total length of the desired string
+     * @return string
+     */
+    public static function zeroPad($number, $length)
+    {
+        return str_pad($number, $length, '0', STR_PAD_LEFT);
+    }
 
-	/**
-	 * Высчитывает процент цисла $numerator от числа $denominator
-	 *
-	 * @param int|float $numerator
-	 * @param int|float $denominator
-	 * @param int $decimals
-	 * @param string $dec_point
-	 * @param string $thousands_sep
-	 * @return int|float
-	 */
-	public static function calculate_percentage($numerator, $denominator, $decimals = 2, $dec_point = '.', $thousands_sep = ','){
-		return number_format(($numerator / $denominator) * 100, $decimals, $dec_point, $thousands_sep);
-	}
+    /**
+     * Высчитывает процент цисла $numerator от числа $denominator
+     *
+     * @param int|float $numerator
+     * @param int|float $denominator
+     * @param int       $decimals
+     * @param string    $dec_point
+     * @param string    $thousands_sep
+     * @return int|float
+     */
+    public static function calculatePercentage($numerator, $denominator, $decimals = 2, $dec_point = '.', $thousands_sep = ',')
+    {
+        return number_format(($numerator / $denominator) * 100, $decimals, $dec_point, $thousands_sep);
+    }
 
-	/**
-	 * Генерирует строку со случайными знаками
-	 *
-	 * @throws  \LengthException  If $length is bigger than the available
-	 *                           character pool and $no_duplicate_chars is
-	 *                           enabled
-	 *
-	 * @param   integer $length             The length of the string to
-	 *                                      generate
-	 * @param   boolean $human_friendly     Whether or not to make the
-	 *                                      string human friendly by
-	 *                                      removing characters that can be
-	 *                                      confused with other characters (
-	 *                                      O and 0, l and 1, etc)
-	 * @param   boolean $include_symbols    Whether or not to include
-	 *                                      symbols in the string. Can not
-	 *                                      be enabled if $human_friendly is
-	 *                                      true
-	 * @param   boolean $no_duplicate_chars Whether or not to only use
-	 *                                      characters once in the string.
-	 * @return  string
-	 */
-	public static function random_string($length = 16, $human_friendly = true, $include_symbols = false, $no_duplicate_chars = false) {
-		$nice_chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefhjkmnprstuvwxyz23456789';
-		$all_an     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
-		$symbols    = '!@#$%^&*()~_-=+{}[]|:;<>,.?/"\'\\`';
-		$string     = '';
+    /**
+     * Генерирует строку со случайными знаками
+     *
+     * @throws  \LengthException  If $length is bigger than the available
+     *                           character pool and $no_duplicate_chars is
+     *                           enabled
+     * @param   integer $length             The length of the string to
+     *                                      generate
+     * @param   boolean $human_friendly     Whether or not to make the
+     *                                      string human friendly by
+     *                                      removing characters that can be
+     *                                      confused with other characters (
+     *                                      O and 0, l and 1, etc)
+     * @param   boolean $include_symbols    Whether or not to include
+     *                                      symbols in the string. Can not
+     *                                      be enabled if $human_friendly is
+     *                                      true
+     * @param   boolean $no_duplicate_chars Whether or not to only use
+     *                                      characters once in the string.
+     * @return  string
+     */
+    public static function randomString($length = 16, $human_friendly = true, $include_symbols = false, $no_duplicate_chars = false)
+    {
+        $nice_chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefhjkmnprstuvwxyz23456789';
+        $all_an = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+        $symbols = '!@#$%^&*()~_-=+{}[]|:;<>,.?/"\'\\`';
+        $string = '';
 
-		if ($human_friendly) {
-			$pool = $nice_chars;
-		} else {
-			$pool = $all_an;
+        if ($human_friendly) {
+            $pool = $nice_chars;
+        } else {
+            $pool = $all_an;
 
-			if ($include_symbols) {
-				$pool .= $symbols;
-			}
-		}
+            if ($include_symbols) {
+                $pool .= $symbols;
+            }
+        }
 
-		if (!$no_duplicate_chars) {
-			return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
-		}
+        if (!$no_duplicate_chars) {
+            return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
+        }
 
-		// Don't allow duplicate letters to be disabled if the length is
-		// longer than the available characters
-		if ($no_duplicate_chars && strlen($pool) < $length) {
-			throw new \LengthException('$length exceeds the size of the pool and $no_duplicate_chars is enabled');
-		}
+        // Don't allow duplicate letters to be disabled if the length is
+        // longer than the available characters
+        if ($no_duplicate_chars && strlen($pool) < $length) {
+            throw new \LengthException('$length exceeds the size of the pool and $no_duplicate_chars is enabled');
+        }
 
-		// Convert the pool of characters into an array of characters and
-		// shuffle the array
-		$pool       = str_split($pool);
-		$poolLength = count($pool);
-		$rand       = mt_rand(0, $poolLength - 1);
+        // Convert the pool of characters into an array of characters and
+        // shuffle the array
+        $pool = str_split($pool);
+        $poolLength = count($pool);
+        $rand = mt_rand(0, $poolLength - 1);
 
-		// Generate our string
-		for ($i = 0; $i < $length; $i++) {
-			$string .= $pool[$rand];
+        // Generate our string
+        for ($i = 0; $i < $length; $i++) {
+            $string .= $pool[$rand];
 
-			// Remove the character from the array to avoid duplicates
-			array_splice($pool, $rand, 1);
+            // Remove the character from the array to avoid duplicates
+            array_splice($pool, $rand, 1);
 
-			// Generate a new number
-			if (($poolLength - 2 - $i) > 0) {
-				$rand = mt_rand(0, $poolLength - 2 - $i);
-			} else {
-				$rand = 0;
-			}
-		}
+            // Generate a new number
+            if (($poolLength - 2 - $i) > 0) {
+                $rand = mt_rand(0, $poolLength - 2 - $i);
+            } else {
+                $rand = 0;
+            }
+        }
 
-		return $string;
-	}
+        return $string;
+    }
 
-	/**
-	 * Валидация email
-	 *
-	 * @param  string $possible_email An email address to validate
-	 * @return bool
-	 */
-	public static function validate_email($possible_email) {
-		return (bool) filter_var($possible_email, FILTER_VALIDATE_EMAIL);
-	}
+    /**
+     * Валидация email
+     *
+     * @param  string $possible_email An email address to validate
+     * @return bool
+     */
+    public static function validateEmail($possible_email)
+    {
+        return (bool)filter_var($possible_email, FILTER_VALIDATE_EMAIL);
+    }
 
-	/**
-	 * Оборачивает все ссылки в гиперссылки HTML.
-	 *
-	 * @param  string $text The string to parse
-	 * @return string
-	 */
-	public static function linkify($text) {
-		$text = preg_replace('/&apos;/', '&#39;', $text); // IE does not handle &apos; entity!
-		$section_html_pattern = '%# Rev:20100913_0900 github.com/jmrware/LinkifyURL
+    /**
+     * Оборачивает все ссылки в гиперссылки HTML.
+     *
+     * @param  string $text The string to parse
+     * @return string
+     */
+    public static function linkify($text)
+    {
+        $text = preg_replace('/&apos;/', '&#39;', $text); // IE does not handle &apos; entity!
+        $section_html_pattern = '%# Rev:20100913_0900 github.com/jmrware/LinkifyURL
             # Section text into HTML <A> tags  and everything else.
               (                             # $1: Everything not HTML <A> tag.
                 [^<]+(?:(?!<a\b)<[^<]*)*     # non A tag stuff starting with non-"<".
@@ -249,19 +258,19 @@ class uString {
              )                              # End $2:
             %ix';
 
-		return preg_replace_callback($section_html_pattern, [__CLASS__, 'linkifyCallback'], $text);
-	}
+        return preg_replace_callback($section_html_pattern, [__CLASS__, 'linkifyCallback'], $text);
+    }
 
-	/**
-	 * Callback for the preg_replace in the linkify() method.
-	 *
-	 * Part of the LinkifyURL Project <https://github.com/jmrware/LinkifyURL>
-	 *
-	 * @param  array  $matches Matches from the preg_ function
-	 * @return string
-	 */
-	protected static function linkifyRegex($text) {
-		$url_pattern = '/# Rev:20100913_0900 github.com\/jmrware\/LinkifyURL
+    /**
+     * Callback for the preg_replace in the linkify() method.
+     * Part of the LinkifyURL Project <https://github.com/jmrware/LinkifyURL>
+     *
+     * @param  array $matches Matches from the preg_ function
+     * @return string
+     */
+    protected static function linkifyRegex($text)
+    {
+        $url_pattern = '/# Rev:20100913_0900 github.com\/jmrware\/LinkifyURL
             # Match http & ftp URL that is not already linkified.
             # Alternative 1: URL delimited by (parentheses).
             (\() # $1 "(" start delimiter.
@@ -302,186 +311,182 @@ class uString {
            ) # End $14. Other non-delimited URL.
             /imx';
 
-		$url_replace = '$1$4$7$10$13<a href="$2$5$8$11$14">$2$5$8$11$14</a>$3$6$9$12';
+        $url_replace = '$1$4$7$10$13<a href="$2$5$8$11$14">$2$5$8$11$14</a>$3$6$9$12';
 
-		return preg_replace($url_pattern, $url_replace, $text);
-	}
+        return preg_replace($url_pattern, $url_replace, $text);
+    }
 
-	/**
-	 * Callback for the preg_replace in the linkify() method.
-	 *
-	 * Part of the LinkifyURL Project <https://github.com/jmrware/LinkifyURL>
-	 *
-	 * @param  array  $matches Matches from the preg_ function
-	 * @return string
-	 */
-	protected static function linkifyCallback($matches) {
-		if (isset($matches[2])) {
-			return $matches[2];
-		}
+    /**
+     * Callback for the preg_replace in the linkify() method.
+     * Part of the LinkifyURL Project <https://github.com/jmrware/LinkifyURL>
+     *
+     * @param  array $matches Matches from the preg_ function
+     * @return string
+     */
+    protected static function linkifyCallback($matches)
+    {
+        if (isset($matches[2])) {
+            return $matches[2];
+        }
 
-		return self::linkifyRegex($matches[1]);
-	}
+        return self::linkifyRegex($matches[1]);
+    }
 
-	/**
-	 * Обрезание строки по длине без обрезки слов.
-	 *
-	 * @param   string  $string  The string to truncate
-	 * @param   integer $length  The length to truncate the string to
-	 * @param   string  $append  Text to append to the string IF it gets
-	 *                           truncated, defaults to '...'
-	 * @return  string
-	 */
-	public static function safe_truncate($string, $length, $append = '...') {
-		$ret        = substr($string, 0, $length);
-		$last_space = strrpos($ret, ' ');
+    /**
+     * Обрезание строки по длине без обрезки слов.
+     *
+     * @param   string  $string  The string to truncate
+     * @param   integer $length  The length to truncate the string to
+     * @param   string  $append  Text to append to the string IF it gets
+     *                           truncated, defaults to '...'
+     * @return  string
+     */
+    public static function safeTruncate($string, $length, $append = '...')
+    {
+        $ret = substr($string, 0, $length);
+        $last_space = strrpos($ret, ' ');
 
-		if ($last_space !== false && $string != $ret) {
-			$ret     = substr($ret, 0, $last_space);
-		}
+        if ($last_space !== false && $string != $ret) {
+            $ret = substr($ret, 0, $last_space);
+        }
 
-		if ($ret != $string) {
-			$ret .= $append;
-		}
+        if ($ret != $string) {
+            $ret .= $append;
+        }
 
-		return $ret;
-	}
+        return $ret;
+    }
 
-	/**
-	 * Truncate the string to given length of words.
-	 *
-	 * @param $string
-	 * @param $limit
-	 * @param string $append
-	 * @return string
-	 */
-	public static function limit_words($string, $limit = 100, $append = '...') {
-		preg_match('/^\s*+(?:\S++\s*+){1,' . $limit . '}/u', $string, $matches);
+    /**
+     * Truncate the string to given length of words.
+     *
+     * @param        $string
+     * @param        $limit
+     * @param string $append
+     * @return string
+     */
+    public static function limitWords($string, $limit = 100, $append = '...')
+    {
+        preg_match('/^\s*+(?:\S++\s*+){1,' . $limit . '}/u', $string, $matches);
 
-		if (!isset($matches[0]) || strlen($string) === strlen($matches[0])) {
-			return $string;
-		}
+        if (!isset($matches[0]) || strlen($string) === strlen($matches[0])) {
+            return $string;
+        }
 
-		return rtrim($matches[0]).$append;
-	}
+        return rtrim($matches[0]) . $append;
+    }
 
-	/**
-	 * Заменяет первое вхождение в строке на подстроку
-	 * @param     $search
-	 * @param     $replace
-	 * @param     $subject
-	 * @param int $cur
-	 *
-	 * @return mixed
-	 */
-	public static function strReplaceFirst($search, $replace, $subject, $cur = 0)
-	{
-		$pos = strpos($subject, $search, $cur);
-		if ($pos!==false){
-			return substr_replace($subject, $replace, (int)$pos, strlen($search));
-		}
-		return $subject;
-	}
+    /**
+     * Заменяет первое вхождение в строке на подстроку
+     *
+     * @param     $search
+     * @param     $replace
+     * @param     $subject
+     * @param int $cur
+     * @return string
+     */
+    public static function strReplaceFirst($search, $replace, $subject, $cur = 0)
+    {
+        $pos = strpos($subject, $search, $cur);
+        if ($pos !== false) {
+            return substr_replace($subject, $replace, (int)$pos, strlen($search));
+        }
+        return $subject;
+    }
 
 
-	/**
-	 * Заменяет все вхождения в строке на подстроку
-	 * @param $search
-	 * @param $replace
-	 * @param $subject
-	 *
-	 * @return mixed
-	 */
-	public static function strReplaceAll($search, $replace, $subject)
-	{
-		return str_replace($search, $replace, $subject);
-	}
+    /**
+     * Заменяет все вхождения в строке на подстроку
+     *
+     * @param string $search
+     * @param string $replace
+     * @param string $subject
+     * @return string
+     */
+    public static function strReplaceAll($search, $replace, $subject)
+    {
+        return str_replace($search, $replace, $subject);
+    }
 
-	/**
-	 * Конвертирование \n и \r\n и \r в <br>
-	 *
-	 * @param string $str String to transform
-	 * @return string New string
-	 */
-	public static function nl2br($str)
-	{
-		return str_replace(["\r\n", "\r", "\n"], '<br>', $str);
-	}
+    /**
+     * Конвертирование \n и \r\n и \r в <br>
+     *
+     * @param string $str String to transform
+     * @return string
+     */
+    public static function nl2br($str)
+    {
+        return str_replace(["\r\n", "\r", "\n"], '<br>', $str);
+    }
 
-	/**
-	 * @param $str
-	 *
-	 * @return mixed
-	 */
-	public static function nlRemoove($str)
-	{
-		return str_replace(["\r\n", "\r", "\n"], '', $str);
-	}
+    /**
+     * @param string $str
+     * @return string
+     */
+    public static function nlRemoove($str)
+    {
+        return str_replace(["\r\n", "\r", "\n"], '', $str);
+    }
 
-	/**
-	 * Преобразует кавычки в елочки в строке
-	 * @param $str
-	 *
-	 * @return mixed
-	 */
-	public static function strKavi4ki ($str) {
-		$str=preg_replace('/""+/','"',$str); // удаляет множественные кавычки
-		$str = preg_replace('/"([A-Za-zА-Яа-я0-9_])/','«$1',$str);
-		//$str = preg_replace('#"(\S)#','&laquo;$1',$str);
-		$str = preg_replace('#"#','»',$str);
-		//$str = preg_replace('#(\S\s*)"#','$1&raquo;',$str);
-		return	$str;
-	}
+    /**
+     * Преобразует кавычки в елочки в строке
+     *
+     * @param string $str
+     * @return string
+     */
+    public static function strKavi4ki($str)
+    {
+        $str = preg_replace('/""+/', '"', $str); // удаляет множественные кавычки
+        $str = preg_replace('/"([A-Za-zА-Яа-я0-9_])/', '«$1', $str);
+        $str = preg_replace('#"#', '»', $str);
+        return $str;
+    }
 
-	/**
-	 * Преобразует HTML-кавычки в HTML-елочки в строке
-	 * если $htmlkav=true - то преобразуется в HTML сущности кавычек, иначе в обычные кавычки-елочки.
-	 * @param      $str
-	 * @param bool $htmlkav
-	 *
-	 * @return mixed
-	 */
-	public static function strKavi4kiHTML ($str,$htmlkav=true) {
-		if ($htmlkav)
-			$htmlkav = ['&laquo;','&raquo;'];
-		else
-			$htmlkav = ['«','»'];
+    /**
+     * Преобразует HTML-кавычки в HTML-елочки в строке
+     * если $htmlkav=true - то преобразуется в HTML сущности кавычек, иначе в обычные кавычки-елочки.
+     *
+     * @param string $str
+     * @param bool   $isHtml
+     * @return string
+     */
+    public static function strKavi4kiHTML($str, $isHtml = true)
+    {
+        $arr = $isHtml ? ['&laquo;', '&raquo;'] : ['«', '»'];
 
-		$str=preg_replace('/&quot;&quot;+/','&quot;',$str); // удаляет множественные кавычки
-		$str = preg_replace('/&quot;([A-Za-zА-Яа-я0-9_])/',$htmlkav[0].'$1',$str);
-		$str = preg_replace('#&quot;#',$htmlkav[1],$str);
-		return	$str;
-	}
+        $str = preg_replace('/&quot;&quot;+/', '&quot;', $str); // удаляет множественные кавычки
+        $str = preg_replace('/&quot;([A-Za-zА-Яа-я0-9_])/', $arr[0] . '$1', $str);
+        $str = preg_replace('#&quot;#', $arr[1], $str);
+        return $str;
+    }
 
-	/**
-	 * Генерация пароля
-	 *
-	 * @param int $numberDigits количество символов в пароле
-	 *
-	 * @return string
-	 */
-	public static function generate_password($numberDigits)
-	{
-		$arr = ['a','b','c','d','e','f',
-			'g','h','i','j','k','l',
-			'm','n','o','p','r','s',
-			't','u','v','x','y','z',
-			'A','B','C','D','E','F',
-			'G','H','I','J','K','L',
-			'M','N','O','P','R','S',
-			'T','U','V','X','Y','Z',
-			'1','2','3','4','5','6',
-			'7','8','9','0','.',',',
-			'(',')','[',']','!','?',
-			'&','%','@','*','$',
-			'<','>','|','+','-',
-			'{','}','~'];
-		$pass = "";
-		for($i = 0; $i < $numberDigits; $i++)
-		{
-			$index = rand(0, count($arr) - 1);
-			$pass .= $arr[$index];
-		}
-		return $pass;
-	}
+    /**
+     * Генерация пароля
+     *
+     * @param int $numberDigits количество символов в пароле
+     * @return string
+     */
+    public static function generate_password($numberDigits)
+    {
+        $arr = ['a', 'b', 'c', 'd', 'e', 'f',
+            'g', 'h', 'i', 'j', 'k', 'l',
+            'm', 'n', 'o', 'p', 'r', 's',
+            't', 'u', 'v', 'x', 'y', 'z',
+            'A', 'B', 'C', 'D', 'E', 'F',
+            'G', 'H', 'I', 'J', 'K', 'L',
+            'M', 'N', 'O', 'P', 'R', 'S',
+            'T', 'U', 'V', 'X', 'Y', 'Z',
+            '1', '2', '3', '4', '5', '6',
+            '7', '8', '9', '0', '.', ',',
+            '(', ')', '[', ']', '!', '?',
+            '&', '%', '@', '*', '$',
+            '<', '>', '|', '+', '-',
+            '{', '}', '~'];
+        $pass = "";
+        for ($i = 0; $i < $numberDigits; $i++) {
+            $index = rand(0, count($arr) - 1);
+            $pass .= $arr[$index];
+        }
+        return $pass;
+    }
 }

@@ -1,8 +1,7 @@
 <?php
-
 use uPhp\u;
 
-require __DIR__ . '/src/uPhp/u.php';
+require __DIR__ . '/vendor/autoload.php';
 
 u::var_dump(
 	['dasdasdasda' => [
