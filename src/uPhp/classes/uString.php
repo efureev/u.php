@@ -60,24 +60,24 @@ class uString
      * Начинается ли строка с подстроки
      *
      * @param  string $string
-     * @param  string $starts_with
+     * @param  string $startsWith
      * @return boolean
      */
-    public static function startsWith($string, $starts_with)
+    public static function startsWith($string, $startsWith)
     {
-        return strpos($string, $starts_with) === 0;
+        return strpos($string, $startsWith) === 0;
     }
 
     /**
      * Заканчивается ли строка подстрокой
      *
      * @param  string $string
-     * @param  string $ends_with
+     * @param  string $endsWith
      * @return boolean
      */
-    public static function endsWith($string, $ends_with)
+    public static function endsWith($string, $endsWith)
     {
-        return substr($string, -strlen($ends_with)) === $ends_with;
+        return substr($string, -strlen($endsWith)) === $endsWith;
     }
 
     /**
@@ -85,7 +85,8 @@ class uString
      *
      * @param  string  $haystack
      * @param  string  $needle
-     * @param  boolean $caseSensitive Регистронезависимый. TRUE = учитывать регистр, False = не учитывать
+     * @param  boolean $caseSensitive Регистронезависимый. TRUE = учитывать регистр,
+     *                                False = не учитывать
      * @return boolean
      */
     public static function strContains($haystack, $needle, $caseSensitive = true)
@@ -120,7 +121,7 @@ class uString
     {
         $string = strtolower($string);
         $string = preg_replace('/[^a-zA-Z 0-9]+/', '', $string);
-        $string = self::strip_space($string);
+        $string = self::stripSpace($string);
         $string = trim($string);
 
         return $string;
@@ -144,13 +145,18 @@ class uString
      * @param int|float $numerator
      * @param int|float $denominator
      * @param int       $decimals
-     * @param string    $dec_point
-     * @param string    $thousands_sep
+     * @param string    $decimalPoint
+     * @param string    $thousandsSeparator
      * @return int|float
      */
-    public static function calculatePercentage($numerator, $denominator, $decimals = 2, $dec_point = '.', $thousands_sep = ',')
+    public static function calculatePercentage(
+        $numerator,
+        $denominator,
+        $decimals = 2,
+        $decimalPoint = '.',
+        $thousandsSeparator = ',')
     {
-        return number_format(($numerator / $denominator) * 100, $decimals, $dec_point, $thousands_sep);
+        return number_format(($numerator / $denominator) * 100, $decimals, $decimalPoint, $thousandsSeparator);
     }
 
     /**
@@ -161,43 +167,47 @@ class uString
      *                           enabled
      * @param   integer $length             The length of the string to
      *                                      generate
-     * @param   boolean $human_friendly     Whether or not to make the
+     * @param   boolean $humanFriendly      Whether or not to make the
      *                                      string human friendly by
      *                                      removing characters that can be
      *                                      confused with other characters (
      *                                      O and 0, l and 1, etc)
-     * @param   boolean $include_symbols    Whether or not to include
+     * @param   boolean $includeSymbols     Whether or not to include
      *                                      symbols in the string. Can not
      *                                      be enabled if $human_friendly is
      *                                      true
-     * @param   boolean $no_duplicate_chars Whether or not to only use
+     * @param   boolean $noDuplicateChars   Whether or not to only use
      *                                      characters once in the string.
      * @return  string
      */
-    public static function randomString($length = 16, $human_friendly = true, $include_symbols = false, $no_duplicate_chars = false)
+    public static function randomString(
+        $length = 16,
+        $humanFriendly = true,
+        $includeSymbols = false,
+        $noDuplicateChars = false)
     {
         $nice_chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefhjkmnprstuvwxyz23456789';
         $all_an = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
         $symbols = '!@#$%^&*()~_-=+{}[]|:;<>,.?/"\'\\`';
         $string = '';
 
-        if ($human_friendly) {
+        if ($humanFriendly) {
             $pool = $nice_chars;
         } else {
             $pool = $all_an;
 
-            if ($include_symbols) {
+            if ($includeSymbols) {
                 $pool .= $symbols;
             }
         }
 
-        if (!$no_duplicate_chars) {
+        if (!$noDuplicateChars) {
             return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
         }
 
         // Don't allow duplicate letters to be disabled if the length is
         // longer than the available characters
-        if ($no_duplicate_chars && strlen($pool) < $length) {
+        if ($noDuplicateChars && strlen($pool) < $length) {
             throw new \LengthException('$length exceeds the size of the pool and $no_duplicate_chars is enabled');
         }
 
@@ -228,12 +238,12 @@ class uString
     /**
      * Валидация email
      *
-     * @param  string $possible_email An email address to validate
+     * @param  string $possibleEmail An email address to validate
      * @return bool
      */
-    public static function validateEmail($possible_email)
+    public static function validateEmail($possibleEmail)
     {
-        return (bool)filter_var($possible_email, FILTER_VALIDATE_EMAIL);
+        return (bool)filter_var($possibleEmail, FILTER_VALIDATE_EMAIL);
     }
 
     /**
@@ -444,10 +454,9 @@ class uString
 
     /**
      * Преобразует HTML-кавычки в HTML-елочки в строке
-     * если $htmlkav=true - то преобразуется в HTML сущности кавычек, иначе в обычные кавычки-елочки.
      *
      * @param string $str
-     * @param bool   $isHtml
+     * @param bool   $isHtml true - то преобразуется в HTML сущности кавычек, иначе в обычные кавычки-елочки
      * @return string
      */
     public static function strKavi4kiHTML($str, $isHtml = true)

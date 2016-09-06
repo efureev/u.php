@@ -31,10 +31,12 @@ class uValidate
      */
     public static function isDate($date)
     {
-        if ($date === '0000-00-00 00:00:00')
+        if ($date === '0000-00-00 00:00:00') {
             return true;
-        if (!preg_match('/^([0-9]{4})-((?:0?[0-9])|(?:1[0-2]))-((?:0?[0-9])|(?:[1-2][0-9])|(?:3[01]))( [0-9]{2}:[0-9]{2}:[0-9]{2})?$/', $date, $matches))
+        }
+        if (!preg_match('/^([0-9]{4})-((?:0?[0-9])|(?:1[0-2]))-((?:0?[0-9])|(?:[1-2][0-9])|(?:3[01]))( [0-9]{2}:[0-9]{2}:[0-9]{2})?$/', $date, $matches)) {
             return false;
+        }
         return checkdate((int)$matches[2], (int)$matches[3], (int)$matches[1]);
     }
 
@@ -46,10 +48,12 @@ class uValidate
      */
     public static function isTime($time)
     {
-        if ($time === '00:00:00' || $time === '00:00')
+        if ($time === '00:00:00' || $time === '00:00') {
             return true;
-        if (preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/', $time))
+        }
+        if (preg_match('/^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/', $time)) {
             return true;
+        }
         return false;
     }
 
@@ -129,11 +133,15 @@ class uValidate
     public static function isCleanHtml($html)
     {
         $events = 'onmousedown|onmousemove|onmmouseup|onmouseover|onmouseout|onload|onunload|onfocus|onblur|onchange';
-        $events .= '|onsubmit|ondblclick|onclick|onkeydown|onkeyup|onkeypress|onmouseenter|onmouseleave|onerror|onselect|onreset|onabort|ondragdrop|onresize|onactivate|onafterprint|onmoveend';
-        $events .= '|onafterupdate|onbeforeactivate|onbeforecopy|onbeforecut|onbeforedeactivate|onbeforeeditfocus|onbeforepaste|onbeforeprint|onbeforeunload|onbeforeupdate|onmove';
-        $events .= '|onbounce|oncellchange|oncontextmenu|oncontrolselect|oncopy|oncut|ondataavailable|ondatasetchanged|ondatasetcomplete|ondeactivate|ondrag|ondragend|ondragenter|onmousewheel';
-        $events .= '|ondragleave|ondragover|ondragstart|ondrop|onerrorupdate|onfilterchange|onfinish|onfocusin|onfocusout|onhashchange|onhelp|oninput|onlosecapture|onmessage|onmouseup|onmovestart';
-        $events .= '|onoffline|ononline|onpaste|onpropertychange|onreadystatechange|onresizeend|onresizestart|onrowenter|onrowexit|onrowsdelete|onrowsinserted|onscroll|onsearch|onselectionchange';
+        $events .= '|onsubmit|ondblclick|onclick|onkeydown|onkeyup|onkeypress|onmouseenter|onmouseleave|onerror|onselect';
+        $events .= '|onafterupdate|onbeforeactivate|onbeforecopy|onbeforecut|onbeforedeactivate|onbeforeeditfocus';
+        $events .= '|onbeforepaste|onbeforeprint|onbeforeunload|onbeforeupdate|onmove|ondragenter|onmousewheel';
+        $events .= '|onbounce|oncellchange|oncontextmenu|oncontrolselect|oncopy|oncut|ondataavailable|ondatasetchanged|';
+        $events .= 'ondatasetcomplete|ondeactivate|ondrag|ondragend|onreset|onabort|ondragdrop|onresize|onactivate';
+        $events .= '|ondragleave|ondragover|ondragstart|ondrop|onerrorupdate|onfilterchange|onfinish|onafterprint';
+        $events .= '|onfocusin|onfocusout|onhashchange|onhelp|oninput|onlosecapture|onmessage|onmouseup|onmovestart';
+        $events .= '|onoffline|ononline|onpaste|onpropertychange|onreadystatechange|onresizeend|onmoveend';
+        $events .= '|onresizestart|onrowenter|onrowexit|onrowsdelete|onrowsinserted|onscroll|onsearch|onselectionchange';
         $events .= '|onselectstart|onstart|onstop';
         return (!preg_match('/<[ \t\n]*script/ims', $html) && !preg_match('/(' . $events . ')[ \t\n]*=/ims', $html) && !preg_match('/.*script\:/ims', $html) && !preg_match('/<[ \t\n]*i?frame/ims', $html));
     }
@@ -171,8 +179,9 @@ class uValidate
      */
     public static function isAbsoluteUrl($url)
     {
-        if (!empty($url))
+        if (!empty($url)) {
             return preg_match('/^https?:\/\/[,:#%&_=\(\)\.\? \+\-@\/a-zA-Z0-9]+$/', $url);
+        }
         return true;
     }
 
