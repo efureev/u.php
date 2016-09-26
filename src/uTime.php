@@ -1,24 +1,23 @@
 <?php
 
-namespace uPhp\classes;
+namespace efureev;
 
 /**
- * u.array
- * Класс для работы с датами
+ * Class uTime
  *
- * @author Eugene Fureev <efureev@yandex.ru>
+ * @package efureev
  */
-class uDate
+class uTime
 {
 
     /**
-     * Возвращает список времени
+     * Return time list
      *
-     * @param int $minutes
+     * @param int $minutes step of minutes
      *
      * @return array
      */
-    public static function getTimeList($minutes = 30)
+    public static function timeList($minutes = 30)
     {
         $res = [];
         $imax = 24 * (60 / $minutes);

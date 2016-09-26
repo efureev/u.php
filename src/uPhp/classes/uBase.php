@@ -298,22 +298,4 @@ class uBase
         return $html;
     }
 
-    /**
-     * Ранжирование: список значений
-     *
-     * @param int $from
-     * @param int $to
-     * @param int $step шаг
-     *
-     * @return array
-     */
-    public static function getRangeList($from, $to, $step = 1)
-    {
-        $array = [];
-        for ($i = $from; $i <= $to; $i += $step) {
-            $array [] = $i;
-        }
-
-        return $array;
-    }
 }

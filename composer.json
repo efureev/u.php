@@ -1,16 +1,19 @@
 {
     "name": "efureev/uphp",
     "type": "library",
-    "version": "0.1.0",
-    "description": "u.php коллекция полезных автономных функций и сниппетов для php",
+    "version": "2.0.0",
+    "description": "u.php useful fn collection & snippets",
     "keywords": ["php", "utility", "helpers"],
     "homepage": "https://github.com/efureev/u.php",
     "license": "MIT",
     "autoload": {
-        "psr-4": { "uPhp\\": "src/uPhp/" }
+        "psr-4": {
+            "uPhp\\": "src/uPhp/",
+            "efureev\\": "src/"
+        }
     },
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.4"
     },
     "require-dev": {
         "phpunit/phpunit": "~5.5",

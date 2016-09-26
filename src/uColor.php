@@ -1,12 +1,11 @@
 <?php
 
-namespace uPhp\classes;
+namespace efureev;
 
 /**
- * u.array
- * Класс для работы с цветами
+ * Class uColor
  *
- * @author Eugene Fureev <efureev@yandex.ru>
+ * @package efureev
  */
 class uColor
 {
@@ -17,11 +16,11 @@ class uColor
      * @param string  $hexStr         (hexadecimal color value)
      * @param boolean $returnAsString (if set true, returns the value separated by the separator character. Otherwise
      *                                returns associative array)
-     * @param string  $seperator      (to separate RGB values. Applicable only if second parameter is true.)
+     * @param string  $separator      (to separate RGB values. Applicable only if second parameter is true.)
      *
      * @return array|string|null (depending on second parameter. Returns Null if invalid hex color value)
      */
-    function hex2RGB($hexStr, $returnAsString = false, $seperator = ',')
+    public static function hex2RGB($hexStr, $returnAsString = false, $separator = ',')
     {
         $hexStr = preg_replace("/[^0-9A-Fa-f]/", '', $hexStr); // Gets a proper hex string
         $rgbArray = [];
@@ -38,7 +37,7 @@ class uColor
             return null; //Invalid hex color code
         }
 
-        return $returnAsString ? implode($seperator, $rgbArray) : $rgbArray; // returns the rgb string or the associative array
+        return $returnAsString ? implode($separator, $rgbArray) : $rgbArray; // returns the rgb string or the associative array
     }
 
 }

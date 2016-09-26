@@ -57,17 +57,7 @@ class uFS
         return $size;
     }
 
-    /**
-     * Возвращает расширение файла
-     *
-     * @param  string $filename
-     *
-     * @return string
-     */
-    public static function getFileExt($filename)
-    {
-        return pathinfo($filename, PATHINFO_EXTENSION);
-    }
+
 
     /**
      * Удаляет дирректорию рекурсивно (включая симлинки).
@@ -150,34 +140,7 @@ class uFS
     }
 
 
-    /**
-     * Форматированный вывод размеров FS
-     *
-     * @param   integer $bytes    The number in bytes to format
-     * @param   integer $decimals The number of decimal points to include
-     *
-     * @return  string
-     */
-    public static function sizeFormat($bytes, $decimals = 0)
-    {
-        $bytes = floatval($bytes);
 
-        if ($bytes < 1024) {
-            return $bytes . ' B';
-        } elseif ($bytes < pow(1024, 2)) {
-            return number_format($bytes / 1024, $decimals, '.', '') . ' KiB';
-        } elseif ($bytes < pow(1024, 3)) {
-            return number_format($bytes / pow(1024, 2), $decimals, '.', '') . ' MiB';
-        } elseif ($bytes < pow(1024, 4)) {
-            return number_format($bytes / pow(1024, 3), $decimals, '.', '') . ' GiB';
-        } elseif ($bytes < pow(1024, 5)) {
-            return number_format($bytes / pow(1024, 4), $decimals, '.', '') . ' TiB';
-        } elseif ($bytes < pow(1024, 6)) {
-            return number_format($bytes / pow(1024, 5), $decimals, '.', '') . ' PiB';
-        } else {
-            return number_format($bytes / pow(1024, 5), $decimals, '.', '') . ' PiB';
-        }
-    }
 
     /**
      * Возвращает нормализованый путь к файлу/папке.
