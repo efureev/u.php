@@ -86,6 +86,34 @@ class uArray
 
 
     /**
+     * Return first element of Array
+     *
+     * @param array $array
+     *
+     * @return mixed
+     */
+    public static function first(array $array)
+    {
+        if (!count($array)) return null;
+
+        return reset($array);
+    }
+
+    /**
+     * Return last element of Array
+     *
+     * @param array $array
+     *
+     * @return mixed
+     */
+    public static function last(array $array)
+    {
+        if (!count($array)) return null;
+
+        return end($array);
+    }
+
+    /**
      * Remove empty values from array: FALSE, 0, '0', '', null
      *
      * @param array $array
@@ -96,6 +124,18 @@ class uArray
     public static function clean(array $array)
     {
         return array_filter($array);
+    }
+
+    /**
+     * Remove the duplicates from an array.
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    public static function unique($array)
+    {
+        return array_flip(array_flip($array));
     }
 
     /**
