@@ -8,9 +8,10 @@ class File2Test extends PHPUnit_Framework_TestCase
 
     public function testOne()
     {
-        $file = __DIR__ . '/LICENSE.md';
-        $this->assertEquals('md', uFile::getExt($file));
-        $this->assertEquals('340 B', uFile::size(dirname($file)));
-        $this->assertEquals(340, filesize(dirname($file)));
+        $path = dirname(__FILE__);
+        $file = $path.'/testFile.txt';
+        $this->assertEquals('txt', uFile::getExt($file));
+        $this->assertEquals('369 B', uFile::size($file));
+        $this->assertEquals(369, filesize($file));
     }
 }
