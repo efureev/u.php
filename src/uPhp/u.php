@@ -30,7 +30,6 @@ final class u
         static::$classMap = include(UPHP_PATH . '/classes.php');
 
         foreach (array_keys(static::$classMap) as $classNamespace) {
-            print_r($name);
             if (method_exists($classNamespace, $name)) {
                 return call_user_func_array([$classNamespace, $name], $arguments);
             }
