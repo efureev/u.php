@@ -20,7 +20,6 @@
             <exclude>
                 <directory>./tests</directory>
                 <directory>./vendor</directory>
-                <directory>./src/uPhp</directory>
             </exclude>
         </whitelist>
     </filter>
