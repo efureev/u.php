@@ -19,5 +19,9 @@ class List2Test extends PHPUnit_Framework_TestCase
         $this->assertEquals(10, $list[0]);
         $this->assertEquals(3, $list[7]);
 
+        $list = uList::rangeList(10, 10);
+
+        $this->assertCount(1, $list);
+        $this->assertEquals(10, $list[0]);
     }
 }

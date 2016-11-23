@@ -63,10 +63,6 @@ class uArray
      */
     public static function isIndexed(array $array, $consecutive = false)
     {
-        if (!is_array($array)) {
-            return false;
-        }
-
         if (empty($array)) {
             return true;
         }

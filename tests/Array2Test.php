@@ -66,10 +66,11 @@ class Array2Test extends PHPUnit_Framework_TestCase
                 'k1-1' => 'v1-1'
             ],
             'complex_[name]_!@#$&%*^' => 'complex',
-            'k2'                      => 'string'
+            'k2'                      => 'string',
+            ''                      => 'mes',
         ];
         $this->assertTrue(uArray::exists('k0', $data)); // returns: true
-        $this->assertFalse(uArray::exists('k9', $data)); // returns: false
+        $this->assertTrue(uArray::exists('', $data));
 
     }
 
@@ -82,6 +83,11 @@ class Array2Test extends PHPUnit_Framework_TestCase
         $this->assertTrue(uArray::save('k0', $data, 'v0')); // returns: true, save as 'k0' => 'v0'
         $this->assertTrue(uArray::save('[k1][k1-1]', $data, 'v1-1'));   // returns: true, save as 'k1' => ['k1-1' => 'v1-1']
         $this->assertFalse(uArray::save('[k2][2]', $data, 'p')); // returns: false, can't save value to string
+
+        $this->assertTrue(uArray::save('', $data, 'Empty'));
+
+        $this->assertTrue(uArray::save('[]', $data, 'Brackets 1'));
+        $this->assertTrue(uArray::save('[]', $data, 'Brackets 2'));
 
 // Broken key names
         $this->assertFalse(uArray::save('k3[', $data, 'v3')); // returns: false, can't save, bad syntax
@@ -107,7 +113,8 @@ class Array2Test extends PHPUnit_Framework_TestCase
             'k1'                      => [
                 'k1-1' => 'v1-1'
             ],
-            'complex_[name]_!@#$&%*^' => 'complex'
+            'complex_[name]_!@#$&%*^' => 'complex',
+            '' => 'empty'
         ];
 
         $this->assertTrue(uArray::delete('k0', $data)); // returns: true, delete element from array
@@ -117,6 +124,10 @@ class Array2Test extends PHPUnit_Framework_TestCase
         $this->assertFalse(uArray::delete('[k1][k1-2]', $data));
 
         $this->assertTrue(uArray::delete('["complex_[name]_!@#$&%*^"]', $data)); // returns: true, delete element from array
+
+        $this->assertTrue(uArray::delete('', $data));
+
+        $this->assertFalse(uArray::delete('[]', $data));
     }
 
     public function testGet()
@@ -127,7 +138,7 @@ class Array2Test extends PHPUnit_Framework_TestCase
                 'k1-1' => 'v1-1'
             ],
             'complex_[name]_!@#$&%*^' => 'complex',
-            'k2'                      => 'string'
+            'k2'                      => 'string',
         ];
 
         $value = uArray::get('k0', $data); // returns: 'v0'
@@ -151,12 +162,89 @@ class Array2Test extends PHPUnit_Framework_TestCase
         $value = uArray::get('[k2][2]', $data); // returns: null, key isn't exists in array
         $this->assertEquals(null, $value);
 
-// If you want get a symbol from string value, you may switch off option $ignoreString = false
+        // If you want get a symbol from string value, you may switch off option $ignoreString = false
         $value = uArray::get('[k2][2]', $data, null, false); // returns: 'r'
         $this->assertEquals('r', $value);
 
         $value = uArray::get('[k2][null]', $data, null, false); // returns: null, offset isn't exists in string
         $this->assertEquals(null, $value);
+
+        $value = uArray::get('', $data); //null
+        $this->assertEquals(null, $value);
+
+        $value = uArray::get('', $data, 120);
+        $this->assertEquals(120, $value);
+
+        $value = uArray::get('[]', $data,'default');
+        $this->assertEquals('default', $value);
+
+        $data = [
+            'k2' => 'string',
+            ''   => [
+                'str' => 'message'
+            ]
+        ];
+
+        $value = uArray::get('', $data);
+        $this->assertEquals($value['str'], 'message');
+
+    }
+
+    public function testFirst()
+    {
+        $data = [
+            'k0'                      => 'v0',
+            'k1'                      => [
+                'k1-1' => 'v1-1'
+            ],
+            'complex_[name]_!@#$&%*^' => 'complex',
+            ''                        => 'empty'
+        ];
+        $firstValue = uArray::first($data);
+        $this->assertEquals('v0', $firstValue);
+
+        $data = ['k0', 'k1', 'complex_[name]_!@#$&%*^', 'empty', ''];
+        $firstValue = uArray::first($data);
+        $this->assertEquals('k0', $firstValue);
+
+    }
+
+    public function testLast()
+    {
+        $data = [
+            'k0'                      => 'v0',
+            'k1'                      => [
+                'k1-1' => 'v1-1'
+            ],
+            'complex_[name]_!@#$&%*^' => 'complex',
+            ''                        => 'empty'
+        ];
+        $value = uArray::last($data);
+        $this->assertEquals('empty', $value);
+
+        $data = ['k0', 'k1', 'complex_[name]_!@#$&%*^', 'empty', ''];
+        $value = uArray::last($data);
+        $this->assertEquals('', $value);
+
+    }
+
+    public function testUnique()
+    {
+        $data = [
+            'k0'                      => 'v0',
+            'k1'                      => 'v3',
+            ''                        => 'empty',
+            '31'                      => 'v3'
+        ];
+        $value = uArray::unique($data);
+        $this->assertArrayNotHasKey('k1', $value);
+
+
+        $data = ['k0', 'k1', 'k1','complex_[name]_!@#$&%*^', 'empty', '','k1','','empty','k0','k1'];
+
+        $value = uArray::unique($data);
+
+        $this->assertCount(5, $value);
     }
 
 }
