@@ -20,9 +20,10 @@ engines:
         enabled: false
 ratings:
   paths:
-  - "**.php"
+  - "src/**.php"
 
 exclude_paths:
 - build/**/*
 - tests/*
 - vendor/**/*
+- uPhp/**/*
