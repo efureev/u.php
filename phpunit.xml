@@ -20,6 +20,9 @@
             <directory>./src</directory>
             <exclude>
                 <directory>./tests</directory>
+                <directory>./coverage</directory>
+                <directory>./build</directory>
+                <directory>./uPhp</directory>
                 <directory>./vendor</directory>
             </exclude>
         </whitelist>
