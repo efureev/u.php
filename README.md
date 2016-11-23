@@ -7,6 +7,9 @@ _utilites4php_
 run all test: `phpunit`
 run test unit: `phpunit tests/BaseTest`
 
+# Send the coverage data to Code Climate
+CODECLIMATE_REPO_TOKEN= {token} ./vendor/bin/test-reporter
+
 # Functions
 
 ## uFile

@@ -20,7 +20,7 @@ engines:
         enabled: false
 ratings:
   paths:
-  - "src/**.php"
+  - src/**
 
 exclude_paths:
 - build/**/*
