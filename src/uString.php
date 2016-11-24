@@ -20,6 +20,9 @@ class uString
      */
     public static function isStartStr($string, $startStr)
     {
+        if ($startStr === '')
+            return false;
+
         return strpos($string, $startStr) === 0;
     }
 

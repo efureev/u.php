@@ -2,7 +2,6 @@
 
 use efureev\uList;
 
-
 class List2Test extends PHPUnit_Framework_TestCase
 {
 
