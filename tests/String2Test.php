@@ -13,5 +13,7 @@ class String2Test extends PHPUnit_Framework_TestCase
         $this->assertTrue(uString::isStartStr(self::$string,'Example'));
         $this->assertFalse(uString::isStartStr(self::$string,''));
         $this->assertFalse(uString::isStartStr(self::$string,'Examples'));
+
+        $this->assertTrue(uString::endsWith(self::$string,'string'));
     }
 }

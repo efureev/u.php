@@ -8,6 +8,7 @@ class List2Test extends PHPUnit_Framework_TestCase
     public function testOne()
     {
         $list = uList::rangeList(3, 10);
+
         $this->assertEquals(8, count($list));
 
         $list = uList::rangeList(1, 100, 10);
