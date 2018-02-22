@@ -1,8 +1,9 @@
 <?php
 
 use efureev\uList;
+use PHPUnit\Framework\TestCase;
 
-class List2Test extends PHPUnit_Framework_TestCase
+class List2Test extends TestCase
 {
 
     public function testOne()

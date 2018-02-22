@@ -299,7 +299,7 @@ class uArray
             'value'        => null
         ];
         $parseInfo['isBroken'] = (bool)preg_replace_callback(['/(?J:\[([\'"])(?<el>.*?)\1\]|(?<el>\]?[^\[]+)|\[(?<el>(?:[^\[\]]+|(?R))*)\])/'],
-            function($m) use (&$parseInfo, &$array) {
+            function ($m) use (&$parseInfo, &$array) {
                 if ($m[0] == '[]') {
                     $parseInfo['isExists'] = false;
                     $parseInfo['cntEBrackets']++;

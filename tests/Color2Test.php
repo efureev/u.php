@@ -1,9 +1,9 @@
 <?php
 
 use efureev\uColor;
+use PHPUnit\Framework\TestCase;
 
-
-class Color2Test extends PHPUnit_Framework_TestCase
+class Color2Test extends TestCase
 {
 
     public function testOne()

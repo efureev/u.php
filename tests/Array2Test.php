@@ -1,9 +1,9 @@
 <?php
 
 use efureev\uArray;
+use PHPUnit\Framework\TestCase;
 
-
-class Array2Test extends PHPUnit_Framework_TestCase
+class Array2Test extends TestCase
 {
 
     public function testClean()
@@ -67,7 +67,7 @@ class Array2Test extends PHPUnit_Framework_TestCase
             ],
             'complex_[name]_!@#$&%*^' => 'complex',
             'k2'                      => 'string',
-            ''                      => 'mes',
+            ''                        => 'mes',
         ];
         $this->assertTrue(uArray::exists('k0', $data)); // returns: true
         $this->assertTrue(uArray::exists('', $data));
@@ -114,7 +114,7 @@ class Array2Test extends PHPUnit_Framework_TestCase
                 'k1-1' => 'v1-1'
             ],
             'complex_[name]_!@#$&%*^' => 'complex',
-            '' => 'empty'
+            ''                        => 'empty'
         ];
 
         $this->assertTrue(uArray::delete('k0', $data)); // returns: true, delete element from array
@@ -175,7 +175,7 @@ class Array2Test extends PHPUnit_Framework_TestCase
         $value = uArray::get('', $data, 120);
         $this->assertEquals(120, $value);
 
-        $value = uArray::get('[]', $data,'default');
+        $value = uArray::get('[]', $data, 'default');
         $this->assertEquals('default', $value);
 
         $data = [
@@ -231,16 +231,16 @@ class Array2Test extends PHPUnit_Framework_TestCase
     public function testUnique()
     {
         $data = [
-            'k0'                      => 'v0',
-            'k1'                      => 'v3',
-            ''                        => 'empty',
-            '31'                      => 'v3'
+            'k0' => 'v0',
+            'k1' => 'v3',
+            ''   => 'empty',
+            '31' => 'v3'
         ];
         $value = uArray::unique($data);
         $this->assertArrayNotHasKey('k1', $value);
 
 
-        $data = ['k0', 'k1', 'k1','complex_[name]_!@#$&%*^', 'empty', '','k1','','empty','k0','k1'];
+        $data = ['k0', 'k1', 'k1', 'complex_[name]_!@#$&%*^', 'empty', '', 'k1', '', 'empty', 'k0', 'k1'];
 
         $value = uArray::unique($data);
 

@@ -21,7 +21,7 @@ class uList
      */
     public static function rangeList($from, $to, $step = 1)
     {
-        if ($from==$to)
+        if ($from == $to)
             return [(int)$from];
 
         $negative = $from > $to ? 1 : 0;
@@ -30,10 +30,11 @@ class uList
         for ($i = ($negative ? $to : $from); $i <= ($negative ? $from : $to); $i += $step) {
             $array [] = $i;
         }
-/*
-        for ($i = $from; $i <= $to; $i += $step) {
-            $array [] = $i;
-        }*/
+
+        /*
+                for ($i = $from; $i <= $to; $i += $step) {
+                    $array [] = $i;
+                }*/
 
         return $negative ? array_reverse($array) : $array;
     }

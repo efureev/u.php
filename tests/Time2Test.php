@@ -1,9 +1,9 @@
 <?php
 
 use efureev\uTime;
+use PHPUnit\Framework\TestCase;
 
-
-class Time2Test extends PHPUnit_Framework_TestCase
+class Time2Test extends TestCase
 {
 
     public function testOne()

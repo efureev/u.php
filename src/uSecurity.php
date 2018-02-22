@@ -114,6 +114,7 @@ class uSecurity
      * The string generated matches [A-Za-z0-9_-]+ and is transparent to URL-encoding.
      *
      * @param integer $length the length of the key in characters
+     *
      * @return string the generated random key
      * @throws \Exception on failure.
      */
